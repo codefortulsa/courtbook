@@ -7,7 +7,7 @@ import path from "path";
 import webpackDevMiddleware from "webpack-dev-middleware";
 import webpack from "webpack";
 import webpackConfig from "../../webpack.config";
-import passport from "./auth/auth";
+// import passport from "./auth/auth";
 
 const app = express();
 
@@ -25,15 +25,15 @@ app.use(cookieParser())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(expressSession({secret: 'keyboard cat', resave: true, saveUninitialized: true}));
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 const publicDir = path.join(__dirname, '../../src/public');
 app.use(`/public`, express.static(publicDir));
 
-app.post('/login',
-    passport.authenticate('local', {failureRedirect: '/fail'}),
-    (req, res) => res.redirect('/woot'));
+// app.post('/login',
+//     passport.authenticate('local', {failureRedirect: '/fail'}),
+//     (req, res) => res.redirect('/woot'));
 
 app.get('/*', (req, res) => res.sendFile(`${publicDir}/index.html`));
 

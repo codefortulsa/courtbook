@@ -1,13 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
+import {Router, browserHistory} from "react-router";
+import "bootstrap/dist/css/bootstrap.css";
+import makeRoutes from "./routes";
 
-import LoginForm from './login/LoginForm';
+const App = ({routes, history}) =>
+    <Router routes={routes} history={history}/>;
 
-const App =
-    <div>
-        <h1>Courtbook</h1>
-        <div>For Great Justice!</div>
-        <LoginForm/>
-    </div>;
+App.propTypes = {
+    history: React.PropTypes.object.isRequired,
+    routes: React.PropTypes.element.isRequired
+};
 
-ReactDOM.render(App, document.getElementById('app'));
+const routes = makeRoutes();
+
+ReactDOM.render(<App history={browserHistory} routes={routes}/>, document.querySelector('#app'));
