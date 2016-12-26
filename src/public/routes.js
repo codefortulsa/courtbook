@@ -8,7 +8,7 @@ import Login from "./Login/Login";
 const auth = new AuthService(__AUTH0_CLIENT_ID__, __AUTH0_DOMAIN__);
 
 const requireAuth = (nextState, replace) => {
-    if (!auth.loggedIn()) {
+    if (!AuthService.loggedIn()) {
         replace({pathname: '/login'});
     }
 };

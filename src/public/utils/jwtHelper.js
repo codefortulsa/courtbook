@@ -1,3 +1,5 @@
+// From https://github.com/auth0-samples/auth0-react-sample/blob/master/01-Login/src/utils/jwtHelper.js
+
 import decode from "jwt-decode";
 
 export function getTokenExpirationDate(token) {
