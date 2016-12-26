@@ -1,5 +1,6 @@
 import React from "react";
-import {Jumbotron} from "react-bootstrap";
+import Header from "./Header";
+import Footer from "./Footer";
 
 const Container = ({route, children}) => {
     if (children) {
@@ -9,12 +10,11 @@ const Container = ({route, children}) => {
     }
 
     return (
-        <Jumbotron>
-            <h2>
-                <img src="https://cdn.auth0.com/styleguide/1.0.0/img/badge.svg"/>
-            </h2>
+        <div className="container-fluid">
+            <Header/>
             {children}
-        </Jumbotron>
+            <Footer/>
+        </div>
     )
 };
 

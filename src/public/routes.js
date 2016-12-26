@@ -1,7 +1,7 @@
 import React from "react";
 import {Route, IndexRedirect} from "react-router";
 import AuthService from "./utils/AuthService";
-import Container from "./Container";
+import Container from "./container/Container";
 import Home from "./Home/Home";
 import Login from "./Login/Login";
 
