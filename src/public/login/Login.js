@@ -1,18 +1,19 @@
-import React, {PropTypes as T} from "react";
+import React from "react";
 import {ButtonToolbar, Button} from "react-bootstrap";
-import AuthService from "../utils/AuthService";
+import {connect} from "react-redux";
+import {promptForLogin} from "../store/actions/AuthenticationActions";
 
-const Login = ({auth}) => (
+const Login = ({login}) => (
     <div>
         <h2>Login</h2>
         <ButtonToolbar>
-            <Button bsStyle="primary" onClick={auth.login.bind(this)}>Login</Button>
+            <Button bsStyle="primary" onClick={login}>Login</Button>
         </ButtonToolbar>
     </div>
 );
 
-Login.propTypes = {
-    auth: T.instanceOf(AuthService)
-};
+const mapDispatchToProps = (dispatch) => ({
+    login: () => dispatch(promptForLogin())
+});
 
-export default Login;
+export default connect(undefined, mapDispatchToProps)(Login);

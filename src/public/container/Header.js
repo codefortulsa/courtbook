@@ -1,15 +1,8 @@
 import React from "react";
-import {Navbar, NavItem, Nav} from "react-bootstrap";
+import {Navbar} from "react-bootstrap";
 import AuthService from "../utils/AuthService";
-
-const AuthenticatedNav = () =>
-    <Navbar.Collapse>
-        <Nav pullRight>
-            <LogoutNavItem/>
-        </Nav>
-    </Navbar.Collapse>;
-
-const LogoutNavItem = () => <NavItem onClick={AuthService.logout}>Logout</NavItem>;
+import AuthenticatedNavbar from "./AuthenticatedNavbar";
+import NotAuthenticatedNavbar from "./NotAuthenticatedNavbar";
 
 const Header = () => {
     return (
@@ -21,7 +14,7 @@ const Header = () => {
                     </Navbar.Brand>
                     <Navbar.Toggle/>
                 </Navbar.Header>
-                {AuthService.loggedIn() ? <AuthenticatedNav/> : null}
+                {AuthService.loggedIn() ? <AuthenticatedNavbar/> : <NotAuthenticatedNavbar/>}
             </Navbar>
         </div>
     );

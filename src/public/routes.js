@@ -4,8 +4,7 @@ import AuthService from "./utils/AuthService";
 import Container from "./container/Container";
 import Home from "./Home/Home";
 import Login from "./Login/Login";
-
-const auth = new AuthService(__AUTH0_CLIENT_ID__, __AUTH0_DOMAIN__);
+import LoggedOut from "./Login/LoggedOut";
 
 const requireAuth = (nextState, replace) => {
     if (!AuthService.loggedIn()) {
@@ -15,10 +14,11 @@ const requireAuth = (nextState, replace) => {
 
 export const makeRoutes = () => {
     return (
-        <Route path="/" component={Container} auth={auth}>
+        <Route path="/" component={Container}>
             <IndexRedirect to="/home"/>
             <Route path="home" component={Home} onEnter={requireAuth}/>
             <Route path="login" component={Login}/>
+            <Route path="loggedOut" component={LoggedOut}/>
         </Route>
     );
 };
