@@ -1,15 +1,19 @@
 import express from "express";
 import bodyParser from "body-parser";
-import expressSession from "express-session";
 import cookieParser from "cookie-parser";
 import logfmt from "logfmt";
 import path from "path";
 import webpackDevMiddleware from "webpack-dev-middleware";
 import webpack from "webpack";
 import webpackConfig from "../../webpack.config";
-// import passport from "./auth/auth";
+import expressJwt from "express-jwt";
+import dotenv from "dotenv";
 
 const app = express();
+
+const dotEnvVars = dotenv.config();
+
+const jwt = expressJwt({secret: dotEnvVars["AUTH0_CLIENT_SECRET"]});
 
 const localDevelopment = process.env.NODE_ENV !== 'production';
 if (localDevelopment) {
@@ -21,19 +25,15 @@ if (localDevelopment) {
 }
 
 app.use(logfmt.requestLogger());
-app.use(cookieParser())
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(expressSession({secret: 'keyboard cat', resave: true, saveUninitialized: true}));
-// app.use(passport.initialize());
-// app.use(passport.session());
 
 const publicDir = path.join(__dirname, '../../src/public');
 app.use(`/public`, express.static(publicDir));
 
-// app.post('/login',
-//     passport.authenticate('local', {failureRedirect: '/fail'}),
-//     (req, res) => res.redirect('/woot'));
+
+app.get("/secured-stuff", jwt, (req, res) => res.send("Congrats!"));
 
 app.get('/*', (req, res) => res.sendFile(`${publicDir}/index.html`));
 
