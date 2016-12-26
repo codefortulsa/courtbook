@@ -1,14 +1,12 @@
 import React from "react";
-import {ButtonToolbar, Button} from "react-bootstrap";
+import {Button} from "react-bootstrap";
 import {connect} from "react-redux";
 import {promptForLogin} from "../store/actions/AuthenticationActions";
 
 const Login = ({login}) => (
-    <div>
-        <h2>Login</h2>
-        <ButtonToolbar>
-            <Button bsStyle="primary" onClick={login}>Login</Button>
-        </ButtonToolbar>
+    <div className="text-center">
+        <h3>Please log in to Courtbook.</h3>
+        <Button bsStyle="primary" onClick={login}>Sign In</Button>
     </div>
 );
 
