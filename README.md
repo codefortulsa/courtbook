@@ -16,12 +16,17 @@ Authentication is provided by [Passport](passportjs.org) and [Auth0](https://aut
 
 ## Deploying to Heroku
 
-```bash
-npm run build
+1. Configure Auth0 client to:
+    * Allowed origins (CORS): https://<your_sub_domain>.herokuapp.com
+    * Allowed callback URLs: https://<your_sub_domain>.herokuapp.com/login
+1. Create, configure, and push your Heroku app (see commands below)
+
+Heroku commands to create, configure, and deploy:
+
+```
 heroku create
 heroku config:set AUTH0_CLIENT_SECRET=<your auth0 client secret>
 heroku config:set AUTH0_CLIENT_ID=<your auth0 client id>
 heroku config:set AUTH0_DOMAIN=<your auth0 domain>
 git push heroku master
 ```
-
