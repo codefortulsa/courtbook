@@ -1,13 +1,13 @@
 "use strict";
 
 const path = require('path');
-const dotenv = require('dotenv');
 const webpack = require('webpack');
+
+const dotEnvVars = require("../../../loadEnv")();
 
 const srcDir = path.join(__dirname, './src');
 
 const envConfig = () => {
-    const dotEnvVars = dotenv.config({silent: process.env.NODE_ENV === 'production'});
     return Object.keys(dotEnvVars)
         .reduce((memo, key) => {
             memo[`__${key.toUpperCase()}__`] = JSON.stringify(dotEnvVars[key]);

@@ -32,5 +32,6 @@ heroku addons:add heroku-postgresql
 heroku config:set AUTH0_CLIENT_SECRET=<your auth0 client secret>
 heroku config:set AUTH0_CLIENT_ID=<your auth0 client id>
 heroku config:set AUTH0_DOMAIN=<your auth0 domain>
+heroku config:set DATABASE_DIALECT="postgres"
 git push heroku master
 ```

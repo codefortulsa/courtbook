@@ -7,11 +7,10 @@ import webpackDevMiddleware from "webpack-dev-middleware";
 import webpack from "webpack";
 import webpackConfig from "../../webpack.config";
 import expressJwt from "express-jwt";
-import dotenv from "dotenv";
+
+require("../../loadEnv")();
 
 const app = express();
-
-dotenv.config({silent: process.env.NODE_ENV === 'production'});
 
 const jwt = expressJwt({
     secret: process.env.AUTH0_CLIENT_SECRET
