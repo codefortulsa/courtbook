@@ -33,7 +33,6 @@ export default class AuthService extends EventEmitter {
             if (error) {
                 console.log('Error loading the Profile', error);
             } else {
-                console.info("profile=", profile);
                 this.setProfile(profile);
             }
         })
