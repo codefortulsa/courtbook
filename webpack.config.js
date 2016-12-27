@@ -7,15 +7,15 @@ const webpack = require('webpack');
 const srcDir = path.join(__dirname, './src');
 
 const envConfig = () => {
-    const dotEnvVars = dotenv.config();
+    const dotEnvVars = dotenv.config({silent: process.env.NODE_ENV === 'production'});
     return Object.keys(dotEnvVars)
         .reduce((memo, key) => {
             memo[`__${key.toUpperCase()}__`] = JSON.stringify(dotEnvVars[key]);
             return memo;
         }, {
             __NODE_ENV__: JSON.stringify(process.env.NODE_ENV),
-            __AUTH0_DOMAIN__: process.env.AUTH0_DOMAIN,
-            __AUTH0_CLIENT_ID__: process.env.AUTH0_CLIENT_ID
+            __AUTH0_DOMAIN__: JSON.stringify(process.env.AUTH0_DOMAIN),
+            __AUTH0_CLIENT_ID__: JSON.stringify(process.env.AUTH0_CLIENT_ID)
         });
 };
 
