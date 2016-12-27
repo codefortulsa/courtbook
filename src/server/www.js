@@ -13,7 +13,9 @@ const app = express();
 
 const dotEnvVars = dotenv.config();
 
-const jwt = expressJwt({secret: dotEnvVars["AUTH0_CLIENT_SECRET"]});
+const jwt = expressJwt({
+    secret: dotEnvVars["AUTH0_CLIENT_SECRET"] || process.env.AUTH0_CLIENT_SECRET
+});
 
 const localDevelopment = process.env.NODE_ENV !== 'production';
 if (localDevelopment) {

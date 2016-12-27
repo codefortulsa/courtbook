@@ -13,7 +13,9 @@ const envConfig = () => {
             memo[`__${key.toUpperCase()}__`] = JSON.stringify(dotEnvVars[key]);
             return memo;
         }, {
-            __NODE_ENV__: JSON.stringify(process.env.NODE_ENV)
+            __NODE_ENV__: JSON.stringify(process.env.NODE_ENV),
+            __AUTH0_DOMAIN__: process.env.AUTH0_DOMAIN,
+            __AUTH0_CLIENT_ID__: process.env.AUTH0_CLIENT_ID
         });
 };
 
