@@ -11,10 +11,10 @@ import dotenv from "dotenv";
 
 const app = express();
 
-const dotEnvVars = dotenv.config();
+dotenv.config({silent: process.env.NODE_ENV === 'production'});
 
 const jwt = expressJwt({
-    secret: dotEnvVars["AUTH0_CLIENT_SECRET"] || process.env.AUTH0_CLIENT_SECRET
+    secret: process.env.AUTH0_CLIENT_SECRET
 });
 
 const localDevelopment = process.env.NODE_ENV !== 'production';
