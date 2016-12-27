@@ -7,6 +7,7 @@
   "scripts": {
     "test": "mocha",
     "start": "babel-node src/server/www.js",
+    "build": "NODE_ENV=production webpack --config ./webpack.config.js --progress --colors",
     "dev": "nodemon src/server/www.js --exec babel-node --watch src/server"
   },
   "author": "Ash Lux",

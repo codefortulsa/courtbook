@@ -23,7 +23,7 @@ module.exports = {
     debug: true,
     devtool: "inline-source-map",
 
-    entry: `${srcDir}/public/main.js`,
+    entry: `${srcDir}/client/main.js`,
 
     output: {
         path: path.join(__dirname, './public'),

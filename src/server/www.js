@@ -31,9 +31,8 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-const publicDir = path.join(__dirname, '../../src/public');
+const publicDir = path.join(__dirname, '../../public');
 app.use(`/public`, express.static(publicDir));
-
 
 app.get("/secured-stuff", jwt, (req, res) => res.send("Congrats!"));
 

@@ -17,6 +17,7 @@ Authentication is provided by [Passport](passportjs.org) and [Auth0](https://aut
 ## Deploying to Heroku
 
 ```bash
+npm run build
 heroku create
 heroku config:set AUTH0_CLIENT_SECRET=<your auth0 client secret>
 heroku config:set AUTH0_CLIENT_ID=<your auth0 client id>

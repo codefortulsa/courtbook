@@ -2,9 +2,9 @@ import React from "react";
 import {Route, IndexRedirect} from "react-router";
 import AuthService from "./utils/AuthService";
 import Container from "./container/Container";
-import Home from "./Home/Home";
-import Login from "./Login/Login";
-import LoggedOut from "./Login/LoggedOut";
+import Home from "./home/Home";
+import Login from "./login/Login";
+import LoggedOut from "./login/LoggedOut";
 
 const requireAuth = (nextState, replace) => {
     if (!AuthService.loggedIn()) {
