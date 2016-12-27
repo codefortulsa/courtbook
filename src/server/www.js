@@ -11,9 +11,11 @@ import dotenv from "dotenv";
 
 const app = express();
 
-const dotEnvVars = dotenv.config();
+dotenv.config({silent: process.env.NODE_ENV === 'production'});
 
-const jwt = expressJwt({secret: dotEnvVars["AUTH0_CLIENT_SECRET"]});
+const jwt = expressJwt({
+    secret: process.env.AUTH0_CLIENT_SECRET
+});
 
 const localDevelopment = process.env.NODE_ENV !== 'production';
 if (localDevelopment) {
@@ -29,9 +31,8 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-const publicDir = path.join(__dirname, '../../src/public');
+const publicDir = path.join(__dirname, '../../public');
 app.use(`/public`, express.static(publicDir));
-
 
 app.get("/secured-stuff", jwt, (req, res) => res.send("Congrats!"));
 

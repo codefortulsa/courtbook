@@ -7,13 +7,15 @@ const webpack = require('webpack');
 const srcDir = path.join(__dirname, './src');
 
 const envConfig = () => {
-    const dotEnvVars = dotenv.config();
+    const dotEnvVars = dotenv.config({silent: process.env.NODE_ENV === 'production'});
     return Object.keys(dotEnvVars)
         .reduce((memo, key) => {
             memo[`__${key.toUpperCase()}__`] = JSON.stringify(dotEnvVars[key]);
             return memo;
         }, {
-            __NODE_ENV__: JSON.stringify(process.env.NODE_ENV)
+            __NODE_ENV__: JSON.stringify(process.env.NODE_ENV),
+            __AUTH0_DOMAIN__: JSON.stringify(process.env.AUTH0_DOMAIN),
+            __AUTH0_CLIENT_ID__: JSON.stringify(process.env.AUTH0_CLIENT_ID)
         });
 };
 
@@ -21,7 +23,7 @@ module.exports = {
     debug: true,
     devtool: "inline-source-map",
 
-    entry: `${srcDir}/public/main.js`,
+    entry: `${srcDir}/client/main.js`,
 
     output: {
         path: path.join(__dirname, './public'),
@@ -46,10 +48,19 @@ module.exports = {
         }, {
             test: /\.jpg$/,
             loader: "file-loader"
-        }, {test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/font-woff'},
-            {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=application/octet-stream'},
-            {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file'},
-            {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=10000&mimetype=image/svg+xml'}]
+        }, {
+            test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
+            loader: 'url?limit=10000&mimetype=application/font-woff'
+        }, {
+            test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+            loader: 'url?limit=10000&mimetype=application/octet-stream'
+        }, {
+            test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+            loader: 'file'
+        }, {
+            test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+            loader: 'url?limit=10000&mimetype=image/svg+xml'
+        }]
     },
 
     plugins: [
