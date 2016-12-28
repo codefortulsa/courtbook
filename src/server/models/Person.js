@@ -9,7 +9,7 @@ export default (sequelize, DataTypes) => {
     }, {
         classMethods: {
             associate: function (models) {
-                Person.hasMany(models.Notification);
+                Person.Notifications = Person.hasMany(models.Notification);
             }
         }
     });

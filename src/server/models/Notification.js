@@ -8,12 +8,7 @@ export default (sequelize, DataTypes) => {
     }, {
         classMethods: {
             associate: function (models) {
-                Notification.belongsTo(models.Person, {
-                    onDelete: "CASCADE",
-                    foreignKey: {
-                        allowNull: false
-                    }
-                });
+                Notification.belongsTo(models.Person);
             }
         }
     });

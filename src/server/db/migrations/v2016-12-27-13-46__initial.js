@@ -24,14 +24,6 @@ function createPerson(queryInterface, Sequelize) {
         phoneNumber: {
             type: Sequelize.STRING,
             allowNull: false
-        },
-        updatedAt: {
-            type: Sequelize.DATE,
-            allowNull: false
-        },
-        createdAt: {
-            type: Sequelize.DATE,
-            allowNull: false
         }
     });
 }
@@ -54,14 +46,6 @@ function createPersonNotification(queryInterface, Sequelize) {
                 model: "Person",
                 key: 'id'
             }
-        },
-        updatedAt: {
-            type: Sequelize.DATE,
-            allowNull: false
-        },
-        createdAt: {
-            type: Sequelize.DATE,
-            allowNull: false
         }
     });
 }

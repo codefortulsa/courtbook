@@ -8,7 +8,9 @@ var env = process.env.NODE_ENV || "development";
 var sequelize = new Sequelize(process.env.DATABASE_URL, {
     quoteIdentifiers: false,
     define: {
-        freezeTableName: true
+        quoteIdentifiers: false,
+        freezeTableName: true,
+        timestamps: false
     }
 });
 

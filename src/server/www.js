@@ -37,7 +37,14 @@ app.use(`/public`, express.static(publicDir));
 app.get("/secured-stuff", jwt, (req, res) => res.send("Congrats!"));
 
 app.get("/people", (req, res) => {
-    models.Person.findAll().then(data => res.send(data));
+    models.Person.findAll({
+        include: [models.Person.Notifications],
+    }).then(data => res.send(data))
+});
+
+app.get("/notifications", (req, res) => {
+    models.Notification.findAll({include: [models.Person]})
+        .then(data => res.send(data))
 });
 
 app.get('/*', (req, res) => res.sendFile(`${publicDir}/index.html`));
