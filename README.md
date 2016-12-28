@@ -4,6 +4,10 @@ A UI for manually providing data for [courtbot](https://github.com/codefortulsa/
 
 ## Local development
 
+### Configuration
+
+You'll need to do a one-time configuration as follows:
+
 1. Authentication
     1. Register for an account with [Auth0](https://auth0.com/)
     1. Create a single page application client
@@ -15,7 +19,18 @@ A UI for manually providing data for [courtbot](https://github.com/codefortulsa/
     * Copy `.env.example` to `.env`
     * `AUTH0_CLIENT_ID`, `AUTH0_DOMAIN`, and `AUTH0_CLIENT_SECRET` come from Auth0
     * `DATABASE_URL` will be the URI for your database
-1. Run app with `npm run dev`
+
+### Running the service
+
+You will first need to migrate the database with [Sequelize](http://www.sequelizejs.com) then run the application in development mode:
+
+```bash
+node_modules/.bin/sequelize db:migrate
+npm run dev
+```
+### Database migrations
+
+You can undo all migrations with `node_modules/.bin/sequelize db:migrate:undo:all` or undo the last applied migration with `node_modules/.bin/sequelize db:migrate:undo`.
 
 ## Deploying to Heroku
 

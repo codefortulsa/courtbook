@@ -7,6 +7,7 @@ import webpackDevMiddleware from "webpack-dev-middleware";
 import webpack from "webpack";
 import webpackConfig from "../../webpack.config";
 import expressJwt from "express-jwt";
+import models from "./models";
 
 require("../../loadEnv")();
 
@@ -34,6 +35,10 @@ const publicDir = path.join(__dirname, '../../public');
 app.use(`/public`, express.static(publicDir));
 
 app.get("/secured-stuff", jwt, (req, res) => res.send("Congrats!"));
+
+app.get("/people", (req, res) => {
+    models.Person.findAll().then(data => res.send(data));
+});
 
 app.get('/*', (req, res) => res.sendFile(`${publicDir}/index.html`));
 

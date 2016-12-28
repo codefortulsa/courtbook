@@ -3,7 +3,7 @@
 const path = require('path');
 const webpack = require('webpack');
 
-const dotEnvVars = require("../../../loadEnv")();
+const dotEnvVars = require("./loadEnv")();
 
 const srcDir = path.join(__dirname, './src');
 
