@@ -19,6 +19,7 @@ Authentication is provided by [Passport](passportjs.org) and [Auth0](https://aut
 1. Configure Auth0 client to:
     * Allowed origins (CORS): https://<your_sub_domain>.herokuapp.com
     * Allowed callback URLs: https://<your_sub_domain>.herokuapp.com/login
+    * Disable sign ups by: Connections > Database > Disable Sign Ups > On (green)
 1. Create, configure, and push your Heroku app (see commands below)
 
 Heroku commands to create, configure, and deploy:
