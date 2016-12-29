@@ -13,6 +13,7 @@ You'll need to do a one-time configuration as follows:
     1. Create a single page application client
         * Allowed origins (CORS): http://localhost:5000
         * Allowed callback URLs: http://localhost:5000/login
+        * Optionally disable sign ups
 1. Database
     * Create a Postgres database - Docker makes this easy: `docker create -p 5432:5432 --name postgre postgres`
 1. Configuration
@@ -37,6 +38,7 @@ You can undo all migrations with `node_modules/.bin/sequelize db:migrate:undo:al
 1. Configure Auth0 client to:
     * Allowed origins (CORS): https://<your_sub_domain>.herokuapp.com
     * Allowed callback URLs: https://<your_sub_domain>.herokuapp.com/login
+    * Disable sign ups by: Connections > Database > Disable Sign Ups > On (green)
 1. Create, configure, and push your Heroku app (see commands below)
 
 Heroku commands to create, configure, and deploy:
