@@ -14,8 +14,8 @@ const app = express();
 
 dotenv.config({silent: process.env.NODE_ENV === 'production'});
 
-const jwt_user_password = expressJwt({secret: process.env.AUTH0_CLIENT_SECRET});
-const jwt_courtbot_api = expressJwt({secret: process.env.AUTH0_COURTBOT_CERT});
+const jwt_user_password = expressJwt({secret: process.env.AUTH0_COURTBOT_CLIENT_SECRET});
+const jwt_courtbot_api = expressJwt({secret: process.env.AUTH0_COURTBOT_SIGNING_CERT});
 
 const localDevelopment = process.env.NODE_ENV !== 'production';
 if (localDevelopment) {
