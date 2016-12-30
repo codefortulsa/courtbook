@@ -15,13 +15,14 @@ Authentication is provided by [Passport](passportjs.org) and [Auth0](https://aut
 
 1. Follow the instructions below for configuring Auth0
 1. Create, configure, and push your Heroku app with the following:
+    * Multiline configurations (e.g., `AUTH0_COURTBOT_SIGNING_CERT`) are a bit tricky. You can get new lines by typing `heroku config:set AUTH0_COURTBOT_SIGNING_CERT="` then paste the text with newlines and then completing the command by typing `"` then enter.
 
 ```
 heroku create
 heroku config:set AUTH0_DOMAIN=<your auth0 domain>
 heroku config:set AUTH0_COURTBOT_UI_CLIENT_SECRET=<auth0 courtbot ui client secret>
 heroku config:set AUTH0_COURTBOT_UI_CLIENT_ID=<auth0 courtbot ui client id>
-heroku config:set AUTH0_COURTBOT_SIGNING_CERT=<auth0 courtbot client signing cert>
+heroku config:set AUTH0_COURTBOT_SIGNING_CERT="<auth0 courtbot client signing cert>"
 heroku config:set AUTH0_COURTBOT_CLIENT_ID=<auth0 courtbot client id>
 heroku config:set AUTH0_COURTBOT_CLIENT_SECRET=<auth0 courtbot client secret>
 git push heroku master
