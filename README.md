@@ -1,54 +1,65 @@
-# Courtbook
+# courtbook
 
 A UI for manually providing data for [courtbot](https://github.com/codefortulsa/courtbot-engine).
 
 ## Local development
 
-### Configuration
-
-You'll need to do a one-time configuration as follows:
-
-1. Authentication
-    1. Register for an account with [Auth0](https://auth0.com/)
-    1. Create a single page application client
-        * Allowed origins (CORS): http://localhost:5000
-        * Allowed callback URLs: http://localhost:5000/login
-        * Optionally disable sign ups
-1. Database
-    * Create a Postgres database - Docker makes this easy: `docker create -p 5432:5432 --name postgre postgres`
-1. Configuration
-    * Copy `.env.example` to `.env`
-    * `AUTH0_CLIENT_ID`, `AUTH0_DOMAIN`, and `AUTH0_CLIENT_SECRET` come from Auth0
-    * `DATABASE_URL` will be the URI for your database
-
-### Running the service
-
-You will first need to migrate the database with [Sequelize](http://www.sequelizejs.com) then run the application in development mode:
-
-```bash
-node_modules/.bin/sequelize db:migrate
-npm run dev
-```
-### Database migrations
-
-You can undo all migrations with `node_modules/.bin/sequelize db:migrate:undo:all` or undo the last applied migration with `node_modules/.bin/sequelize db:migrate:undo`.
+1. Follow the instructions below for configuring Auth0
+1. Create a Postgres database
+1. Copy `.env.example` to `.env` then change the example settings to your own.
+    * All `AUTH0_` settings, see below for Configuring Auth0
+    * `DATABASE_URL` setting is your Postgres connection URL which will be in this format: DATABASE_URL='postgres://USERNAME:PASSWORD@HOST:PORT/DATABASE'
+    * `DATABASE_DIALECT` should be 'postgres'.
+1. Run app with `npm run dev`
 
 ## Deploying to Heroku
 
-1. Configure Auth0 client to:
-    * Allowed origins (CORS): https://<your_sub_domain>.herokuapp.com
-    * Allowed callback URLs: https://<your_sub_domain>.herokuapp.com/login
-    * Disable sign ups by: Connections > Database > Disable Sign Ups > On (green)
-1. Create, configure, and push your Heroku app (see commands below)
+1. Follow the instructions below for configuring Auth0
+1. Create, configure, and push your Heroku app with the following:
+    * Multiline configurations (e.g., `AUTH0_COURTBOT_SIGNING_CERT`) are a bit tricky. You can get new lines by typing `heroku config:set AUTH0_COURTBOT_SIGNING_CERT="` then paste the text with newlines and then completing the command by typing `"` then enter.
 
-Heroku commands to create, configure, and deploy:
-
-```bash
+```
 heroku create
 heroku addons:add heroku-postgresql
-heroku config:set AUTH0_CLIENT_SECRET=<your auth0 client secret>
-heroku config:set AUTH0_CLIENT_ID=<your auth0 client id>
-heroku config:set AUTH0_DOMAIN=<your auth0 domain>
 heroku config:set DATABASE_DIALECT="postgres"
+heroku config:set AUTH0_DOMAIN=<your auth0 domain>
+heroku config:set AUTH0_COURTBOT_UI_CLIENT_SECRET=<auth0 courtbot ui client secret>
+heroku config:set AUTH0_COURTBOT_UI_CLIENT_ID=<auth0 courtbot ui client id>
+heroku config:set AUTH0_COURTBOT_SIGNING_CERT="<auth0 courtbot client signing cert>"
+heroku config:set AUTH0_COURTBOT_CLIENT_ID=<auth0 courtbot client id>
+heroku config:set AUTH0_COURTBOT_CLIENT_SECRET=<auth0 courtbot client secret>
 git push heroku master
 ```
+
+## Configuring authentication with Auth0
+
+OAuth2 authentication is provided by [Auth0](https://auth0.com) so these steps will get you going there:
+
+1. Register for an account with Auth0
+1. Configure Auth0:
+    1. Create a new connection database
+        * Name it "courtbot-user-database"
+        * Disable sign ups
+    1. Create a new "single page application" client named "courtbot-ui". This client is used for user authentication.
+        * Allowed origins (CORS): 
+            * Add `https://<your_sub_domain>.herokuapp.com`
+            * _Local development only_ add `http://localhost:5000`
+        * Allowed callback URLs: 
+            * Add `https://<your_sub_domain>.herokuapp.com/login`
+            * _Local development only_ add `http://localhost:5000/login`
+        * The domain, client ID, and client secret is the configuration for `AUTH0_DOMAIN`, `AUTH0_COURTBOT_UI_CLIENT_ID`, and `AUTH0_COURTBOT_UI_CLIENT_SECRET`.
+    1. Create a new "non-interactive" client named "courtbot". This client is used for courtbot to make calls to certain API endpoints without providing a username and password.
+        * The domain, client ID, and client secret is the configuration for `AUTH0_DOMAIN`, `AUTH0_COURTBOT_CLIENT_ID`, and `AUTH0_COURTBOT_CLIENT_SECRET`. 
+        * Under advanced settings > certificates, the signing certificate is the configuration for `AUTH0_COURTBOT_SIGNING_CERT`.
+
+## API Endpoints
+
+Two API endpoints are provided for Courtbot:
+
+1. `GET /v1/case/:caseNumber` - Retrieve all people associated with the given case number.
+1. `GET /v1/case/:caseNumber/person/:personName` - Retrieve all events (dates and descriptions) for the given case number and the specified person.
+
+API endpoints that this UI makes to Courtbot:
+
+1. `POST ???` - Register a case number, name, and phone number.
+1. Need update / delete?

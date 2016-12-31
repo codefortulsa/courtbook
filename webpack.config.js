@@ -15,7 +15,7 @@ const envConfig = () => {
         }, {
             __NODE_ENV__: JSON.stringify(process.env.NODE_ENV),
             __AUTH0_DOMAIN__: JSON.stringify(process.env.AUTH0_DOMAIN),
-            __AUTH0_CLIENT_ID__: JSON.stringify(process.env.AUTH0_CLIENT_ID)
+            __AUTH0_COURTBOT_UI_CLIENT_ID__: JSON.stringify(process.env.AUTH0_COURTBOT_UI_CLIENT_ID)
         });
 };
 
