@@ -5,13 +5,13 @@ module.exports = {
     },
 
     down: function (queryInterface) {
-        queryInterface.dropTable("notification");
-        queryInterface.dropTable("person");
+        queryInterface.dropTable("Notifications");
+        queryInterface.dropTable("People");
     }
 };
 
 function createPerson(queryInterface, Sequelize) {
-    return queryInterface.createTable("person", {
+    return queryInterface.createTable("People", {
         id: {
             type: Sequelize.UUID,
             allowNull: false,
@@ -29,7 +29,7 @@ function createPerson(queryInterface, Sequelize) {
 }
 
 function createPersonNotification(queryInterface, Sequelize) {
-    return () => queryInterface.createTable("notification", {
+    return () => queryInterface.createTable("Notifications", {
         id: {
             type: Sequelize.UUID,
             allowNull: false,
@@ -39,11 +39,11 @@ function createPersonNotification(queryInterface, Sequelize) {
             type: Sequelize.DATE,
             allowNull: false
         },
-        personId: {
+        PersonId: {
             type: Sequelize.UUID,
             allowNull: false,
             references: {
-                model: "Person",
+                model: "People",
                 key: 'id'
             }
         }

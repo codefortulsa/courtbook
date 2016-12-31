@@ -41,9 +41,7 @@ app.get("/v1/case/:caseNumber", jwt_courtbot_api, getPeopleByCaseNumber);
 app.get("/v1/case/:caseNumber/person/:personName", jwt_courtbot_api, getNotifications);
 
 app.get("/people", (req, res) => {
-    models.Person.findAll({
-        include: [models.Person.Notifications],
-    }).then(data => res.send(data))
+    models.Person.findAll({include: [models.Person.Notifications]}).then(data => res.send(data))
 });
 
 app.get("/notifications", (req, res) => {
