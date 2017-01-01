@@ -1,9 +1,9 @@
-import {push} from "react-router-redux";
 import AuthService from "../../utils/AuthService";
+import {loggedOut} from "./NavigationActions";
 
 export const logoutUser = () => dispatch => {
     AuthService.logout();
-    dispatch(push('/loggedOut'));
+    dispatch(loggedOut());
 };
 
 export const promptForLogin = () => (dispatch, getState) => {
