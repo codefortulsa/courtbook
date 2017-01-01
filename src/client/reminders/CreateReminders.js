@@ -1,11 +1,13 @@
 import React from "react";
-import CreatePersonForm from "./CreatePersonForm";
+import PersonForm from "./PersonForm";
+import RemindersForm from "./RemindersForm";
 import {PageHeader} from 'react-bootstrap';
 
 const CreatePerson = () => (
     <div>
         <PageHeader>Create Reminders</PageHeader>
-        <CreatePersonForm/>
+        <PersonForm/>
+        <RemindersForm/>
     </div>
 );
 

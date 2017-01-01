@@ -1,6 +1,6 @@
 import {push} from "react-router-redux";
 
-export const create = () => push('/create');
+export const createReminders = () => push('/createReminders');
 
 export const loggedOut = () => push('/loggedOut');
 

@@ -3,7 +3,7 @@ import {Row, Col} from "react-bootstrap";
 import {Field, reduxForm} from "redux-form";
 import {FieldGroup} from "./FieldGroup";
 
-const CreatePersonForm = () => (
+const PersonForm = () => (
     <div>
         <Row>
             <Col md={4}>
@@ -20,5 +20,5 @@ const CreatePersonForm = () => (
 );
 
 export default reduxForm({
-    form: 'createPersonForm'
-})(CreatePersonForm);
+    form: 'personForm'
+})(PersonForm);

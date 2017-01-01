@@ -5,7 +5,7 @@ import Container from "./container/Container";
 import Home from "./home/Home";
 import Login from "./login/Login";
 import LoggedOut from "./login/LoggedOut";
-import CreatePerson from "./person/CreatePerson";
+import CreateReminders from "./reminders/CreateReminders";
 
 const requireAuth = (nextState, replace) => {
     if (!AuthService.loggedIn()) {
@@ -18,7 +18,7 @@ export const makeRoutes = () => {
         <Route path="/" component={Container}>
             <IndexRedirect to="/home"/>
             <Route path="home" component={Home} onEnter={requireAuth}/>
-            <Route path="create" component={CreatePerson} onEnter={requireAuth}/>
+            <Route path="create" component={CreateReminders} onEnter={requireAuth}/>
             <Route path="login" component={Login}/>
             <Route path="loggedOut" component={LoggedOut}/>
         </Route>
