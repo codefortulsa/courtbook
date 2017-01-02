@@ -1,8 +1,7 @@
 import React from "react";
 import {Row, Col} from "react-bootstrap";
-import {Field, reduxForm} from "redux-form";
+import {Field} from "redux-form";
 import {FieldGroup} from "./FieldGroup";
-import {REMINDER_FORM_NAME} from "../store/actions/ReminderActions";
 
 const PersonForm = () => (
     <div>
@@ -21,6 +20,4 @@ const PersonForm = () => (
     </div>
 );
 
-export default reduxForm({
-    form: REMINDER_FORM_NAME,
-})(PersonForm);
+export default PersonForm;

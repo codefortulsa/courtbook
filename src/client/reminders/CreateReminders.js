@@ -4,7 +4,7 @@ import {PageHeader, Button} from "react-bootstrap";
 import {reduxForm} from "redux-form";
 import PersonForm from "./PersonForm";
 import RemindersForm from "./RemindersForm";
-import {REMINDER_FORM_NAME, createReminder} from "../store/actions/ReminderActions";
+import {REMINDER_FORM_NAME, createReminders} from "../store/actions/ReminderActions";
 
 const CreateReminders = ({handleSubmit}) => (
     <div>
@@ -21,5 +21,5 @@ const CreateReminders = ({handleSubmit}) => (
 
 export default connect(undefined, undefined)(reduxForm({
     form: REMINDER_FORM_NAME,
-    onSubmit: createReminder
+    onSubmit: createReminders
 })(CreateReminders));
