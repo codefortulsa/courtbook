@@ -18,7 +18,7 @@ export const makeRoutes = () => {
         <Route path="/" component={Container}>
             <IndexRedirect to="/home"/>
             <Route path="home" component={Home} onEnter={requireAuth}/>
-            <Route path="create" component={CreateReminders} onEnter={requireAuth}/>
+            <Route path="createReminders" component={CreateReminders} onEnter={requireAuth}/>
             <Route path="login" component={Login}/>
             <Route path="loggedOut" component={LoggedOut}/>
         </Route>
