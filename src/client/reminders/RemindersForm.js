@@ -1,17 +1,23 @@
 import React from "react";
-import {Field} from "redux-form";
-import {Col, Row} from "react-bootstrap";
-import {FieldGroup} from "./FieldGroup";
+import {Button, Row, Col, Glyphicon} from "react-bootstrap";
+import ReminderForm from "./ReminderForm";
+import "../style/styles.less";
 
-const RemindersForm = () => (
-    <Row>
-        <Col md={2}>
-            <Field name="date" id="date" label="Date" required={true} component={FieldGroup}/>
-        </Col>
-        <Col md={10}>
-            <Field name="description" id="description" label="Description" required={true} component={FieldGroup}/>
-        </Col>
-    </Row>
+const RemindersForm = ({fields}) => (
+    <div>
+        <Row>
+            <Col mdOffset={2} md={8}>
+                {fields.map((field, index) => <ReminderForm key={index} member={field} index={index}/>)}
+            </Col>
+        </Row>
+        <Row>
+            <Col mdOffset={2} md={8}>
+                <div className="text-center">
+                    <Button onClick={() => fields.push()}><Glyphicon glyph="plus"/> Add Reminder</Button>
+                </div>
+            </Col>
+        </Row>
+    </div>
 );
 
 export default RemindersForm;

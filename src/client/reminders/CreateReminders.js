@@ -1,7 +1,7 @@
 import React from "react";
 import {connect} from "react-redux";
 import {PageHeader, Button} from "react-bootstrap";
-import {reduxForm} from "redux-form";
+import {reduxForm, FieldArray} from "redux-form";
 import PersonForm from "./PersonForm";
 import RemindersForm from "./RemindersForm";
 import {REMINDER_FORM_NAME, createReminders} from "../store/actions/ReminderActions";
@@ -10,7 +10,7 @@ const CreateReminders = ({handleSubmit}) => (
     <div>
         <PageHeader>Create Reminders</PageHeader>
         <PersonForm/>
-        <RemindersForm/>
+        <FieldArray name="reminders" component={RemindersForm}/>
         <div style={{overflow: "auto"}}>
             <div className="pull-right">
                 <Button id="create" bsStyle="primary" onClick={handleSubmit}>Create</Button>
