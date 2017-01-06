@@ -1,3 +1,5 @@
+import express from "express";
+
 const cases = {
     FAKE1: {
         defendants: [
@@ -41,6 +43,8 @@ const cases = {
     }
 };
 
+const router = express.Router();
+
 export const getPeopleByCaseNumber = (req, res) => {
     const {caseNumber} = req.params;
     console.info("Getting people for case number: ", caseNumber);
@@ -48,9 +52,28 @@ export const getPeopleByCaseNumber = (req, res) => {
     res.send(theCase ? theCase.defendants : []);
 };
 
+
 export const getNotifications = (req, res) => {
     const {caseNumber, personName} = req.params;
     console.info("Getting people for case number:", caseNumber, "and person:", personName);
     const events = cases[caseNumber] && cases[caseNumber].events ? cases[caseNumber].events[personName] : [];
     res.send(events ? events : []);
 };
+
+router.route('/v1/case/:caseNumber')
+    .get(getPeopleByCaseNumber);
+
+router.route('/v1/case/:caseNumber/person/:personName')
+    .get(getNotifications);
+
+// import models from "./models";
+// app.get("/people", (req, res) => {
+    // models.Person.findAll({include: [models.Person.Notifications]}).then(data => res.send(data))
+// });
+//
+// app.get("/notifications", (req, res) => {
+//     models.Notification.findAll({include: [models.Person]})
+//         .then(data => res.send(data))
+// });
+
+export default router;
