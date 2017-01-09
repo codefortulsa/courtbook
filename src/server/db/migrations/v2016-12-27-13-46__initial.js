@@ -13,9 +13,10 @@ module.exports = {
 function createPerson(queryInterface, Sequelize) {
     return queryInterface.createTable("People", {
         id: {
-            type: Sequelize.UUID,
+            type: Sequelize.BIGINT,
             allowNull: false,
-            primaryKey: true
+            primaryKey: true,
+            autoIncrement: true
         },
         name: {
             type: Sequelize.STRING,
@@ -31,16 +32,17 @@ function createPerson(queryInterface, Sequelize) {
 function createPersonNotification(queryInterface, Sequelize) {
     return () => queryInterface.createTable("Notifications", {
         id: {
-            type: Sequelize.UUID,
+            type: Sequelize.BIGINT,
             allowNull: false,
-            primaryKey: true
+            primaryKey: true,
+            autoIncrement: true
         },
         date: {
             type: Sequelize.DATE,
             allowNull: false
         },
         PersonId: {
-            type: Sequelize.UUID,
+            type: Sequelize.BIGINT,
             allowNull: false,
             references: {
                 model: "People",

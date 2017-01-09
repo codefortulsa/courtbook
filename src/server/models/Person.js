@@ -1,15 +1,18 @@
 export default (sequelize, DataTypes) => {
     const Person = sequelize.define('Person', {
         id: {
-            type: DataTypes.UUID,
-            primaryKey: true
+            type: DataTypes.BIGINT,
+            primaryKey: true,
+            autoIncrement: true
         },
         name: DataTypes.STRING,
         phoneNumber: DataTypes.STRING
     }, {
         classMethods: {
             associate: function (models) {
-                Person.Notifications = Person.hasMany(models.Notification);
+                Person.hasMany(models.Notification, {
+                    as: "notifications"
+                });
             }
         }
     });
