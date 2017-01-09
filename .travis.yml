@@ -8,5 +8,5 @@ services:
 
 env:
   global:
-    - DATABASE_URL="postgres"
+    - DATABASE_URL="postgres://localhost"
     - DATABASE_DIALECT="postgres"
