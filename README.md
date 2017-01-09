@@ -1,4 +1,4 @@
-# courtbook
+# courtbook [![Build Status](https://travis-ci.org/codefortulsa/courtbook.svg?branch=master)](https://travis-ci.org/codefortulsa/courtbook)
 
 A UI for manually providing data for [courtbot](https://github.com/codefortulsa/courtbot-engine).
 
