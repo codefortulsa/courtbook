@@ -7,5 +7,6 @@ services:
   - postgresql
 
 env:
-- DATABASE_URL="postgres"
-- DATABASE_DIALECT="postgres"
+  global:
+    - DATABASE_URL="postgres"
+    - DATABASE_DIALECT="postgres"
