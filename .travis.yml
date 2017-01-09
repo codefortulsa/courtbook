@@ -13,3 +13,4 @@ env:
 
 before_script:
   - psql -c 'create database courtbook;' -U postgres
+  - node_modules/.bin/sequelize db:migrate
