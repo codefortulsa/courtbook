@@ -8,5 +8,8 @@ services:
 
 env:
   global:
-    - DATABASE_URL="postgres://localhost"
+    - DATABASE_URL="postgres://postgres@localhost:5432/courtbook"
     - DATABASE_DIALECT="postgres"
+
+before_script:
+  - psql -c 'create database courtbook;' -U postgres
