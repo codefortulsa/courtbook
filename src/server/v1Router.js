@@ -1,4 +1,5 @@
 import express from "express";
+import models from "./models";
 
 const cases = {
     FAKE1: {
@@ -60,16 +61,26 @@ export const getNotifications = (req, res) => {
     res.send(events ? events : []);
 };
 
+export const createReminders = (req, res) => {
+    const personReminders = req.body;
+    models.Person.create(personReminders)
+        .then(() => console.info("DONE") || res.send("WOOT"));
+};
+
 router.route('/v1/case/:caseNumber')
     .get(getPeopleByCaseNumber);
 
 router.route('/v1/case/:caseNumber/person/:personName')
     .get(getNotifications);
 
-// import models from "./models";
-// app.get("/people", (req, res) => {
-    // models.Person.findAll({include: [models.Person.Notifications]}).then(data => res.send(data))
-// });
+router.route('/v1/reminders')
+    .post(createReminders);
+
+router.route("/people")
+    .get((req, res) => {
+    models.Person.findAll({include: [models.Person.Notifications]}).then(data => res.send(data))
+});
+
 //
 // app.get("/notifications", (req, res) => {
 //     models.Notification.findAll({include: [models.Person]})
