@@ -9,5 +9,8 @@ export const secret = (req, tokenPayload, cb) => {
     }
 };
 
-export const noneShallPass = expressJwt({secret});
-export default noneShallPass;
+const bypassAuthentication = (err, req, res, next) => next();
+
+const jwtAuthentication = expressJwt({secret});
+
+export default process.env.BYPASS_AUTH ? bypassAuthentication : jwtAuthentication;

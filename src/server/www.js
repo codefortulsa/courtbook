@@ -7,7 +7,7 @@ import webpackDevMiddleware from "webpack-dev-middleware";
 import webpack from "webpack";
 import webpackConfig from "../../webpack.config";
 import v1Router from "./v1Router";
-import {noneShallPass} from "./noneShallPass";
+import authMiddleware from "./auth-middleware";
 
 
 require("../../loadEnv")();
@@ -31,7 +31,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 const publicDir = path.join(__dirname, '../../public');
 app.use(`/public`, express.static(publicDir));
 
-app.use("/rest", noneShallPass, v1Router);
+app.use("/rest", authMiddleware, v1Router);
 
 app.get('/*', (req, res) => res.sendFile(`${publicDir}/index.html`));
 
