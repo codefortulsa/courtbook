@@ -11,7 +11,7 @@
     "postinstall": "npm run build",
     "dev": "nodemon src/server/www.js --exec babel-node --watch src/server"
   },
-  "author": "Ash Lux",
+  "author": "Ash Lux (ashlux@gmail.com)",
   "license": "MIT",
   "engines": {
     "node": "6.9.1"
