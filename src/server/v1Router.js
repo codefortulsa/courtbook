@@ -1,90 +1,53 @@
 import express from "express";
-import models from "./models";
-
-const cases = {
-    FAKE1: {
-        defendants: [
-            {name: "Mickey Mouse"},
-            {name: "Minnie Mouse"}
-        ],
-        events: {
-            "Mickey Mouse": [
-                {date: "2016-12-30T05:49:20+00:00", description: "PRELIMINARY HEARING ISSUE (PUBLIC DEFENDER)"}
-            ],
-            "Minnie Mouse": [
-                {date: "2016-12-30T05:49:20+00:00", description: "PRELIMINARY HEARING ISSUE (PUBLIC DEFENDER)"},
-                {date: "2016-12-30T05:49:20+00:00", description: "HEARING #2"},
-                {date: "2016-12-30T05:49:20+00:00", description: "HEARING #3"}
-            ]
-        }
-    },
-    FAKE2: {
-        defendants: [
-            {name: "Donald Duck"},
-            {name: "Daisy Duck"}
-        ],
-        events: {
-            "Donald Duck": [],
-            "Daisy Duck": []
-        }
-    },
-    FAKE3: {
-        defendants: [
-            {name: "Scrooge McDuck"}
-        ],
-        events: {
-            "Scrooge McDuck": [
-                {date: "2016-12-30T05:49:20+00:00", description: "PRELIMINARY HEARING ISSUE (PUBLIC DEFENDER)"},
-                {date: "2016-12-30T05:49:20+00:00", description: "HEARING #2"},
-                {date: "2016-12-30T05:49:20+00:00", description: "HEARING #3"},
-                {date: "2016-12-30T05:49:20+00:00", description: "HEARING #4"},
-                {date: "2016-12-30T05:49:20+00:00", description: "HEARING #5"}
-            ]
-        }
-    }
-};
+import {CourtCase, CourtCaseEvent} from "./db/models";
 
 const router = express.Router();
 
-export const getPeopleByCaseNumber = (req, res) => {
-    const {caseNumber} = req.params;
-    console.info("Getting people for case number: ", caseNumber);
-    const theCase = cases[caseNumber];
-    res.send(theCase ? theCase.defendants : []);
+// router.route('/v1/case/:caseNumber/person/:personName')
+// .get((req, res) => res.send(getReminderByCaseNumberAndName(req.params.caseNumber, req.params.personName)));
+
+const handleError = (res, message) => (err) => {
+    console.error(message, err);
+    res.send(message);
 };
 
+const caseFromReq = (req) => ({caseNumber: req.params.caseNumber, defendant: req.params.defendant});
 
-export const getNotifications = (req, res) => {
-    const {caseNumber, personName} = req.params;
-    console.info("Getting people for case number:", caseNumber, "and person:", personName);
-    const events = cases[caseNumber] && cases[caseNumber].events ? cases[caseNumber].events[personName] : [];
-    res.send(events ? events : []);
-};
+const caseUrl = "/v1/cases/case/:caseNumber/defendant/:defendant";
 
-export const createReminders = (req, res) => {
-    const personReminders = req.body;
-    models.Person.create(personReminders)
-        .then(() => console.info("DONE") || res.send("WOOT"));
-};
+router.route(caseUrl)
+    .get((req, res) =>
+        CourtCase.where(caseFromReq(req)).fetch()
+            .then(courtCase => res.send(courtCase.toJSON()))
+            .catch(handleError(res, "Failed to fetch court case.")))
+    .post((req, res) =>
+        CourtCase.forge(caseFromReq(req)).save(null)
+            .then((createdCourtCase) => res.send(createdCourtCase.toJSON()))
+            .catch(() => res.send("Failed to create court case.")))
+    .put((req, res) => res.send("UPDATED"));
 
-router.route('/v1/case/:caseNumber')
-    .get(getPeopleByCaseNumber);
+const eventsUrl = `${caseUrl}/events`;
 
-router.route('/v1/case/:caseNumber/person/:personName')
-    .get(getNotifications);
+router.route(eventsUrl)
+    .get((req, res) =>
+        CourtCase.where(caseFromReq(req)).fetch()
+            .then(courtCase => CourtCaseEvent.where({courtCaseId: courtCase.id}).fetchAll())
+            .then(courtCaseEvents => res.send(courtCaseEvents.toJSON()))
+            .catch(handleError(res, "Failed to fetch events.")));
 
-router.route('/v1/reminders')
-    .post(createReminders);
+const eventUrl = `${eventsUrl}/event`;
 
-router.route("/people")
-    .get((req, res) => {
-    models.Person.findAll({include: [models.Person.Notifications]}).then(data => res.send(data))
-});
+router.route(eventUrl)
+    .post((req, res) =>
+        CourtCase.where(caseFromReq(req)).fetch()
+            .courtCaseEvents().attach(req.body)
+            .then((courtCase) => res.send(courtCase.toJSON()))
+            .catch(() => res.send("Failed to create court case events.")));
 
+// const eventUrl = `${eventsUrl}/event/:eventId`;
 //
-// app.get("/notifications", (req, res) => {
-//     models.Notification.findAll({include: [models.Person]})
-//         .then(data => res.send(data))
-// });
+// router.route(eventUrl)
+//     .get((req, res) => res.send("GET ONE EVENT"))
+//     .put((req, res) => res.send("UPDATE ONE EVENT"));
 
 export default router;

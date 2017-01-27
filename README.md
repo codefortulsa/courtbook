@@ -12,6 +12,10 @@ A UI for manually providing data for [courtbot](https://github.com/codefortulsa/
     * `DATABASE_DIALECT` should be 'postgres'.
 1. Run app with `npm run dev`
 
+### Database migrations
+
+Database migrations are handled by [db-migrate](https://github.com/db-migrate/node-db-migrate).
+
 ## Deploying to Heroku
 
 1. Follow the instructions below for configuring Auth0

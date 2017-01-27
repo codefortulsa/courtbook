@@ -4,6 +4,7 @@ import {EventEmitter} from "events";
 import {isTokenExpired} from "./jwtHelper";
 import Auth0Lock from "auth0-lock";
 import {browserHistory} from "react-router";
+import {} from '../routes';
 
 export default class AuthService extends EventEmitter {
     constructor(clientId, domain) {
@@ -26,7 +27,7 @@ export default class AuthService extends EventEmitter {
     _doAuthentication(authResult) {
         // Saves the user token
         AuthService.setToken(authResult.idToken);
-        // navigate to the home route
+        // navigate to the navigateHome route
         browserHistory.replace('/home');
         // Async loads the user profile data
         this.lock.getUserInfo(authResult.accessToken, (error, profile) => {

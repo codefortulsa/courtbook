@@ -2,14 +2,13 @@ import React from "react";
 import {Navbar, NavItem, Nav} from "react-bootstrap";
 import {connect} from "react-redux";
 import {logoutUser} from "../store/actions/AuthenticationActions";
-import {home, createReminders} from "../store/actions/NavigationActions";
+import {navigateHome, navigateAddCourtCase} from "../store/actions/NavigationActions";
 
-
-const AuthenticatedNavbar = ({logout, navigateHome, navigateToCreateReminders}) =>
+const AuthenticatedNavbar = ({logout, navigateHome, navigateAddCourtCase}) =>
     <Navbar.Collapse>
         <Nav>
             <NavItem onClick={navigateHome}>Home</NavItem>
-            <NavItem onClick={navigateToCreateReminders}>Create Reminders</NavItem>
+            <NavItem onClick={navigateAddCourtCase}>Add Court Case</NavItem>
         </Nav>
         <Nav pullRight>
             <NavItem onClick={logout}>Logout</NavItem>
@@ -18,8 +17,8 @@ const AuthenticatedNavbar = ({logout, navigateHome, navigateToCreateReminders}) 
 
 const mapDispatch = dispatch => ({
     logout: () => dispatch(logoutUser()),
-    navigateToCreateReminders: () => dispatch(createReminders()),
-    navigateHome: () => dispatch(home())
+    navigateAddCourtCase: () => dispatch(navigateAddCourtCase()),
+    navigateHome: () => dispatch(navigateHome())
 });
 
 export default connect(undefined, mapDispatch)(AuthenticatedNavbar);

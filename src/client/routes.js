@@ -5,7 +5,8 @@ import Container from "./container/Container";
 import Home from "./home/Home";
 import Login from "./login/Login";
 import LoggedOut from "./login/LoggedOut";
-import CreateReminders from "./reminders/CreateReminders";
+import CreateCourtCase from "./court-case/CreateCourtCase";
+import ViewCourtCases from "./court-case/ViewCourtCases";
 
 const requireAuth = (nextState, replace) => {
     if (!AuthService.loggedIn()) {
@@ -18,7 +19,8 @@ export const makeRoutes = () => {
         <Route path="/" component={Container}>
             <IndexRedirect to="/home"/>
             <Route path="home" component={Home} onEnter={requireAuth}/>
-            <Route path="createReminders" component={CreateReminders} onEnter={requireAuth}/>
+            <Route path="/court-case/add" component={CreateCourtCase} onEnter={requireAuth}/>
+            <Route path="/court-case/:personId" components={ViewCourtCases} onEnter={requireAuth}/>
             <Route path="login" component={Login}/>
             <Route path="loggedOut" component={LoggedOut}/>
         </Route>
