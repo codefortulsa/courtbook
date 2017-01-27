@@ -1,13 +1,13 @@
 import React from "react";
 import {Button, Glyphicon, Row, Col} from "react-bootstrap";
-import EventForm from "./EventForm";
-import "../style/styles.less";
+import StakeholderForm from "./StakeholderForm";
+import "../../style/styles.less";
 
-const EventsForm = ({fields}) => (
+const StakeholdersForm = ({fields}) => (
     <div>
         <Row>
             <Col xs={6}>
-                <h4>Case Events</h4>
+                <h4>Stakeholders</h4>
             </Col>
             <Col xs={6}>
                 <div className="pull-right">
@@ -17,10 +17,10 @@ const EventsForm = ({fields}) => (
         </Row>
         <Row>
             <Col md={12}>
-                {fields.map((field, index) => <EventForm key={index} member={field} index={index}/>)}
+                {fields.map((field, index) => <StakeholderForm key={index} member={field} index={index}/>)}
             </Col>
         </Row>
     </div>
 );
 
-export default EventsForm;
+export default StakeholdersForm;

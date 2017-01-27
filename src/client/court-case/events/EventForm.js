@@ -1,7 +1,7 @@
 import React from "react";
 import {Field} from "redux-form";
 import {Col, Row} from "react-bootstrap";
-import {FieldGroup} from "./FieldGroup";
+import {FieldGroup} from "../FieldGroup";
 
 const EventForm = ({member, index}) => {
     const dateLabel = `Event date ${index + 1}`;
