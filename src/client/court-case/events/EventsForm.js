@@ -8,7 +8,7 @@ const cardSize = {sm: 6, md: 4, lg: 3};
 const EventsForm = ({fields}) => (
     <Row>
         {fields.map((field, index) =>
-            <Col key={index} {...cardSize}><EventForm member={field} index={index}/></Col>
+            <Col key={index} {...cardSize}><EventForm member={field} index={index} remove={()=>{fields.remove(index)}}/></Col>
         )}
         <Col sm={12}>
             <Panel>
