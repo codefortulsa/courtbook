@@ -1,9 +1,11 @@
+import _ from "lodash";
 import React from "react";
 import {connect} from "react-redux";
-import {PageHeader, Button, ButtonToolbar, Grid, Glyphicon} from "react-bootstrap";
+import {PageHeader, Button, ButtonToolbar, Grid} from "react-bootstrap";
 import {reduxForm, FieldArray} from "redux-form";
 import EventsForm from "./EventsForm";
-import {editCourtCaseEvents, fetchAndSelectCourtCase} from "../../store/actions/CourtCaseActions";
+import {fetchAndSelectCourtCase} from "../../store/actions/CourtCaseActions";
+import {saveEvents} from "../../store/actions/EventActions";
 import {compose, lifecycle} from "recompose";
 
 const enhance = compose(
@@ -26,16 +28,22 @@ const EditCourtCaseEvents = ({fields, caseNumber, defendant, handleSubmit}) => (
                 </div>
             </PageHeader>
         </div>
-        <FieldArray name="courtCases" component={EventsForm}/>
+        <FieldArray name="events" component={EventsForm}/>
     </Grid>
 );
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state, x, y) => ({
     caseNumber: state.selectedCase.courtCase.caseNumber,
-    defendant: state.selectedCase.courtCase.defendant
+    defendant: state.selectedCase.courtCase.defendant,
+    initialValues: {
+        existingEventIds: _.map(state.selectedCase.events, "id"),
+        courtCaseId: state.selectedCase.courtCase.id,
+        events: state.selectedCase.events
+    }
 });
 
 export default connect(mapStateToProps, {fetchAndSelectCourtCase})(reduxForm({
     form: "editCourtCaseEventsForm",
-    onSubmit: editCourtCaseEvents
+    onSubmit: saveEvents,
+    enableReinitialize: true
 })(enhance(EditCourtCaseEvents)));

@@ -22,10 +22,3 @@ export const fetchAndSelectCourtCase = (courtCaseId) => (dispatch) => {
         }
     }));
 };
-
-export const editCourtCaseEvents = (courtCaseEvents) => {
-    return {
-        type: "EDIT_COURT_CASE_EVENTS",
-        payload: courtCaseEvents
-    };
-};
