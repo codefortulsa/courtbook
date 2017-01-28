@@ -47,12 +47,17 @@ router.route(`${casesBaseUrl}/:courtCaseId/events`)
             .then(courtCaseEvents => res.send(courtCaseEvents))
             .catch(handleError(res, "Failed to fetch events.")));
 
+const getCaseByNumberAndDefendant = (caseNumber, defendant) =>
+    CourtCase.query(qb => qb
+        .whereRaw(`LOWER("caseNumber") LIKE LOWER(?)`, [`%${caseNumber}%`])
+        .whereRaw(`LOWER("defendant") LIKE LOWER(?)`, [`%${defendant}%`])
+    ).fetch();
+
 router.route(`${casesBaseUrl}/:caseNumber/defendant/:defendant`)
     .get((req, res) =>
         // Courtbot uses this endpoint
-        CourtCase.where({caseNumber: req.params.caseNumber, defendant: req.params.defendant})
-            .fetch()
-            .then(courtCase => courtCase ? getEventsByCaseId(courtCase.id) : [])
+        getCaseByNumberAndDefendant(req.params.caseNumber, req.params.defendant)
+            .then(courtCase => console.info("courtCase=") || courtCase ? getEventsByCaseId(courtCase.id) : [])
             .then(courtCaseEvents => res.send(courtCaseEvents))
             .catch(handleError(res, "Failed to get events for case number and defendant.")));
 
