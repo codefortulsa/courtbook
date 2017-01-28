@@ -35,6 +35,7 @@ const mapStateToProps = (state) => ({
     defendant: state.selectedCase.courtCase.defendant
 });
 
-export default connect(mapStateToProps, {onSubmit: editCourtCaseEvents, fetchAndSelectCourtCase})(reduxForm({
-    form: "editCourtCaseEventsForm"
+export default connect(mapStateToProps, {fetchAndSelectCourtCase})(reduxForm({
+    form: "editCourtCaseEventsForm",
+    onSubmit: editCourtCaseEvents
 })(enhance(EditCourtCaseEvents)));
