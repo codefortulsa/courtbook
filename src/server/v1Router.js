@@ -3,49 +3,57 @@ import {CourtCase, CourtCaseEvent} from "./db/models";
 
 const router = express.Router();
 
-// router.route('/v1/case/:caseNumber/person/:personName')
-// .get((req, res) => res.send(getReminderByCaseNumberAndName(req.params.caseNumber, req.params.personName)));
-
 const handleError = (res, message) => (err) => {
     console.error(message, err);
     res.status(500).send(message);
 };
 
-const casesUrl = `/v1/cases`;
-router.route(casesUrl)
+const casesBaseUrl = `/v1/cases`;
+
+router.route(casesBaseUrl)
     .get((req, res) =>
+        // Courtbot uses this endpoint
         CourtCase.query(qb => qb.whereRaw(`LOWER("caseNumber") LIKE LOWER(?)`, [`%${req.query.caseNumber}%`]))
             .fetchAll()
-            .then(courtCases => res.send(courtCases.toJSON())))
+            .then(courtCases => res.send(courtCases)))
     .post((req, res) =>
-        CourtCase.forge(req.body).save(null)
-            .then((createdCourtCase) => res.send(createdCourtCase.toJSON()))
+        CourtCase.forge(req.body)
+            .save(null)
+            .then((createdCourtCase) => res.send(createdCourtCase))
             .catch(handleError(res, "Failed to create court case.")));
 
-const caseUrl = `${casesUrl}/case/:courtCaseId`;
-router.route(caseUrl)
+
+router.route(`${casesBaseUrl}/:courtCaseId`)
     .get((req, res) =>
-        CourtCase.where({id: req.params.courtCaseId}).fetch()
-            .then(courtCase => res.send(courtCase.toJSON()))
-            .catch(handleError(res, "Failed to fetch court case.")))
-    .put((req, res) => res.send("UPDATED"));
+        CourtCase.where({id: req.params.courtCaseId})
+            .fetch()
+            .then(courtCase => res.send(courtCase))
+            .catch(handleError(res, "Failed to fetch court case.")));
 
 
-const eventsUrl = `${caseUrl}/events`;
-router.route(eventsUrl)
+const getEventsByCaseId = (courtCaseId) => CourtCaseEvent.where({courtCaseId}).fetchAll();
+
+router.route(`${casesBaseUrl}/:courtCaseId/events`)
+    .post((req, res) =>
+        CourtCase.where({id: req.params.courtCaseId})
+            .fetch()
+            .courtCaseEvents().attach(req.body)
+            .then((courtCase) => res.send(courtCase))
+            .catch(handleError(res, "Failed to create court case events.")))
     .get((req, res) =>
-        CourtCase.where({id: req.params.courtCaseId}).fetch()
-            .then(courtCase => CourtCaseEvent.where({courtCaseId: courtCase.id}).fetchAll())
-            .then(courtCaseEvents => res.send(courtCaseEvents.toJSON()))
+        CourtCase.where({id: req.params.courtCaseId})
+            .fetch()
+            .then(courtCase => getEventsByCaseId(courtCase.id))
+            .then(courtCaseEvents => res.send(courtCaseEvents))
             .catch(handleError(res, "Failed to fetch events.")));
 
-
-const eventUrl = `${eventsUrl}/event`;
-router.route(eventUrl)
-    .post((req, res) =>
-        CourtCase.where({id: req.params.courtCaseId}).fetch()
-            .courtCaseEvents().attach(req.body)
-            .then((courtCase) => res.send(courtCase.toJSON()))
-            .catch(handleError(res, "Failed to create court case events.")));
+router.route(`${casesBaseUrl}/:caseNumber/defendant/:defendant`)
+    .get((req, res) =>
+        // Courtbot uses this endpoint
+        CourtCase.where({caseNumber: req.params.caseNumber, defendant: req.params.defendant})
+            .fetch()
+            .then(courtCase => courtCase ? getEventsByCaseId(courtCase.id) : [])
+            .then(courtCaseEvents => res.send(courtCaseEvents))
+            .catch(handleError(res, "Failed to get events for case number and defendant.")));
 
 export default router;
