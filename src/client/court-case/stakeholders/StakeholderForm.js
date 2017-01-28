@@ -1,7 +1,7 @@
 import React from "react";
 import {Field} from "redux-form";
 import {Col, Row} from "react-bootstrap";
-import {FieldGroup} from "./FieldGroup";
+import {FieldGroup} from "../FieldGroup";
 
 const StakeholderForm = ({member, index}) => {
     const nameLabel = `Stakeholder Name ${index + 1}`;

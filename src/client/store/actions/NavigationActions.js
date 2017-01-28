@@ -6,4 +6,4 @@ export const navigateHome = () => push('/home');
 
 export const navigateAddCourtCase = () => push('/court-case/add');
 
-export const courtCaseSummary = (id) => push(`/court-case/${id}`);
+export const navigateAddCaseEvents = (courtCaseId) => push(`/court-case/${courtCaseId}/edit-events`);
