@@ -53,7 +53,7 @@ const getCaseByNumberAndDefendant = (caseNumber, defendant) =>
         .whereRaw(`LOWER("defendant") LIKE LOWER(?)`, [`%${defendant}%`])
     ).fetch();
 
-router.route(`${casesBaseUrl}/:caseNumber/defendant/:defendant`)
+router.route(`${casesBaseUrl}/:caseNumber/defendant/:defendant/events`)
     .get((req, res) =>
         // Courtbot uses this endpoint
         getCaseByNumberAndDefendant(req.params.caseNumber, req.params.defendant)
