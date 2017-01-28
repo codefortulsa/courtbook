@@ -28,6 +28,16 @@ describe("models", function () {
             });
     });
 
+    it("sql injection test", function () {
+        // return CourtCase.query(qb => qb.where('caseNumber', 'LIKE', '%Courtbot'))
+        const search = "Courtbot";
+        return CourtCase.query(qb => qb.whereRaw(`LOWER("caseNumber") LIKE LOWER(?)`, [`%${search}%`]))
+            .fetchAll()
+            .then(cases => {
+                console.info("cases=", cases.toJSON());
+            });
+    });
+
     const randomCourtCase = () => ({
         defendant: chance.name(),
         caseNumber: chance.guid()
