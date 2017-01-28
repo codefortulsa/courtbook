@@ -13,11 +13,14 @@ const handleError = (res, message) => (err) => {
 
 const casesUrl = `/v1/cases`;
 router.route(casesUrl)
+    .get((req, res) =>
+        CourtCase.query(qb => qb.whereRaw(`LOWER("caseNumber") LIKE LOWER(?)`, [`%${req.query.caseNumber}%`]))
+            .fetchAll()
+            .then(courtCases => res.send(courtCases.toJSON())))
     .post((req, res) =>
         CourtCase.forge(req.body).save(null)
             .then((createdCourtCase) => res.send(createdCourtCase.toJSON()))
             .catch(handleError(res, "Failed to create court case.")));
-
 
 const caseUrl = `${casesUrl}/case/:courtCaseId`;
 router.route(caseUrl)
