@@ -7,6 +7,7 @@ import Login from "./login/Login";
 import LoggedOut from "./login/LoggedOut";
 import CreateCourtCase from "./court-case/CreateCourtCase";
 import EditCourtCaseEvents from "./court-case/events/EditCourtCaseEvents";
+import EditStakeholders from "./court-case/stakeholders/EditStakeholders";
 
 const requireAuth = (nextState, replace) => {
     if (!AuthService.loggedIn()) {
@@ -24,6 +25,7 @@ export const makeRoutes = () => {
             <Route path="court-case"  onEnter={requireAuth}>
                 <Route path="add" component={CreateCourtCase}/>
                 <Route path=":id/edit-events" components={EditCourtCaseEvents}/>
+                <Route path=":id/edit-stakeholders" components={EditStakeholders}/>
             </Route>
         </Route>
     );

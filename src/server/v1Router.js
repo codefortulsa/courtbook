@@ -6,6 +6,7 @@ import {
     fetchCaseByLikeCaseNumberAndLikeDefendant
 } from "./db/court-case";
 import {createEvent, getEventsByCaseId, deleteEventById, updateEvent} from "./db/court-case-events";
+import {createStakeholder, getStakeholdersByCaseId, deleteStakeholderById, updateStakeholder} from "./db/court-case-stakeholders";
 
 const router = express.Router();
 
@@ -17,6 +18,7 @@ const handleError = (res, message) => (err) => {
 const baseUrl = `/v1`;
 const casesBaseUrl = `${baseUrl}/cases`;
 const eventsBaseUrl = `${baseUrl}/events`;
+const stakeholderBaseUrl = `${baseUrl}/stakeholders`;
 
 router.route(casesBaseUrl)
     .get((req, res) =>
@@ -35,7 +37,6 @@ router.route(`${casesBaseUrl}/:courtCaseId`)
             .then(courtCase => res.send(courtCase))
             .catch(handleError(res, "Failed to fetch court case.")));
 
-
 router.route(`${casesBaseUrl}/:courtCaseId/events`)
     .get((req, res) =>
         fetchCaseById(req.params.courtCaseId)
@@ -43,12 +44,36 @@ router.route(`${casesBaseUrl}/:courtCaseId/events`)
             .then(courtCaseEvents => res.send(courtCaseEvents))
             .catch(handleError(res, "Failed to fetch events.")));
 
+router.route(`${casesBaseUrl}/:courtCaseId/stakeholders`)
+    .get((req, res) =>
+        fetchCaseById(req.params.courtCaseId)
+            .then(courtCase => getStakeholdersByCaseId(courtCase.id))
+            .then(stakeholders => res.send(stakeholders))
+            .catch(handleError(res, "Failed to fetch stakeholders.")));
+
 router.route(`${casesBaseUrl}/:caseNumber/defendant/:defendant/events`)
     .get((req, res) =>
         fetchCaseByLikeCaseNumberAndLikeDefendant(req.params.caseNumber, req.params.defendant)
             .then(courtCase => courtCase ? getEventsByCaseId(courtCase.id) : [])
             .then(courtCaseEvents => res.send(courtCaseEvents))
             .catch(handleError(res, "Failed to get events for case number and defendant.")));
+
+router.route(`${stakeholderBaseUrl}`)
+    .post((req, res) =>
+        createStakeholder(req.body)
+            .then((courtCase) => res.send(courtCase))
+            .catch(handleError(res, "Failed to create court case stakeholders.")))
+    .put((req, res) =>
+        updateStakeholder(req.body)
+            .then(event => res.send(event))
+            .catch(handleError(res, "Failed to update stakeholder.")));
+
+router.route(`${stakeholderBaseUrl}/:id`)
+    .delete((req, res) =>
+        deleteStakeholderById(req.params.id)
+            .then(() => res.send("OK"))
+            .catch(handleError(res, "Failed to delete stakeholder.")));
+
 
 router.route(`${eventsBaseUrl}`)
     .post((req, res) =>

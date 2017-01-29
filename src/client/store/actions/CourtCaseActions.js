@@ -1,5 +1,5 @@
 import {navigateAddCaseEvents} from "./NavigationActions";
-import {fetchCourtCaseById, createCase, fetchEventsByCourtCaseId} from "../../courtbook-api";
+import {fetchCourtCaseById, createCase, fetchEventsByCourtCaseId, fetchStakeholdersByCourtCaseId} from "../../courtbook-api";
 
 export const CREATE_COURT_CASE = "CREATE_COURT_CASE";
 export const SELECT_COURT_CASE = "SELECT_COURT_CASE";
@@ -13,12 +13,14 @@ export const createCourtCase = (courtCase) => (dispatch) => ({
 export const fetchAndSelectCourtCase = (courtCaseId) => (dispatch) => {
     Promise.all([
         fetchCourtCaseById(courtCaseId),
-        fetchEventsByCourtCaseId(courtCaseId)
+        fetchEventsByCourtCaseId(courtCaseId),
+        fetchStakeholdersByCourtCaseId(courtCaseId)
     ]).then(resolve => dispatch({
         type: SELECT_COURT_CASE,
         payload: {
             courtCase: resolve[0],
-            events: resolve[1]
+            events: resolve[1],
+            stakeholders: resolve[2]
         }
     }));
 };
