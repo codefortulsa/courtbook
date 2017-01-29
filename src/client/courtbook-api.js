@@ -18,3 +18,18 @@ export const createCase = (courtCase) =>
     agent.post("/rest/v1/cases", courtCase)
         .set("Authorization", `Bearer ${AuthService.getToken()}`)
         .then(response => Promise.resolve(response.body));
+
+export const deleteEventById = (id) =>
+    agent.delete(`/rest/v1/events/${id}`)
+        .set("Authorization", `Bearer ${AuthService.getToken()}`)
+        .then(response => Promise.resolve(response.body));
+
+export const createEvent = (event) =>
+    agent.post(`/rest/v1/events`, event)
+        .set("Authorization", `Bearer ${AuthService.getToken()}`)
+        .then(response => Promise.resolve(response.body));
+
+export const updateEvent = (event) =>
+    agent.put(`/rest/v1/events`, event)
+        .set("Authorization", `Bearer ${AuthService.getToken()}`)
+        .then(response => Promise.resolve(response.body));
