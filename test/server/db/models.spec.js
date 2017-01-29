@@ -44,6 +44,7 @@ describe("models", function () {
     });
 
     const randomCaseEvent = () => ({
-        date: chance.date()
+        date: chance.date(),
+        description: chance.sentence()
     });
 });
