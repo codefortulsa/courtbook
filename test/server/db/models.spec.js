@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import {expect} from "chai";
 import setup from "../../setup";
-import {CourtCase, CourtCaseEvent} from "../../../src/server/db/models";
+import {CourtCase} from "../../../src/server/db/models";
 
 describe("models", function () {
     const {chance} = setup();
@@ -28,14 +28,19 @@ describe("models", function () {
             });
     });
 
-    it("sql injection test", function () {
-        // return CourtCase.query(qb => qb.where('caseNumber', 'LIKE', '%Courtbot'))
-        const search = "Courtbot";
-        return CourtCase.query(qb => qb.whereRaw(`LOWER("caseNumber") LIKE LOWER(?)`, [`%${search}%`]))
-            .fetchAll()
-            .then(cases => {
-                console.info("cases=", cases.toJSON());
+    xit("update", function () {
+        const x = new CourtCase(randomCourtCase());
+        const y = x.save(null)
+            .then(courtCase => {
+                console.info("Case attrs=", courtCase.attributes);
+                console.info("Case fns=", _.functions(courtCase));
+                console.info("Case keys=", _.keys(courtCase));
+                return x.set({defendant: "XYZ"}).save();
+                // return x.save({defendant: "XYZ"})
             });
+        console.info("x=", x);
+        console.info("y=", y);
+        return y;
     });
 
     const randomCourtCase = () => ({
@@ -44,6 +49,7 @@ describe("models", function () {
     });
 
     const randomCaseEvent = () => ({
-        date: chance.date()
+        date: chance.date(),
+        description: chance.sentence()
     });
 });
