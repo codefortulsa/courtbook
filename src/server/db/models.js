@@ -13,9 +13,16 @@ export const CourtCase = bookshelf.Model.extend({
     tableName: 'courtCases',
     courtCaseEvents: function() {
         return this.belongsToMany(CourtCaseEvent, "courtCaseEvents", "courtCaseId");
+    },
+    stakeholders: function() {
+        return this.belongsToMany(Stakeholder, "stakeholders", "courtCaseId");
     }
 });
 
 export const CourtCaseEvent = bookshelf.Model.extend({
     tableName: 'courtCaseEvents'
+});
+
+export const Stakeholder = bookshelf.Model.extend({
+    tableName: 'stakeholders'
 });

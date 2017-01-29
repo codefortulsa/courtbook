@@ -19,7 +19,7 @@ const StakeholderForm = ({member, index}) => {
                        placeholder="Name" srOnly={true} required={true} component={FieldGroup}/>
             </Col>
             <Col md={6}>
-                <Field name={`${member}.phoneNumber`} id={`${member}.phoneNumber`} label={phoneNumberLabel}
+                <Field name={`${member}.contact`} id={`${member}.contact`} label={phoneNumberLabel}
                        placeholder="Cell Number" srOnly={true} required={true} component={FieldGroup}/>
             </Col>
         </Row>
