@@ -41,10 +41,10 @@ OAuth2 authentication is provided by [Auth0](https://auth0.com) so these steps w
 
 1. Register for an account with Auth0
 1. Configure Auth0:
-    1. Create a new connection database
-        * Name it "courtbot-user-database"
-        * Disable sign ups
-    1. Create a new "single page application" client named "courtbot-ui". This client is used for user authentication.
+    1. Create a new connection database for Courtbook
+        * Name it "courtbook-user-database"
+        * Disable sign ups - prevents self-signup
+    1. Create a new client using "single page application". Name the client "courtbook". This client is used for user authentication.
         * Allowed origins (CORS): 
             * Add `https://<your_sub_domain>.herokuapp.com`
             * _Local development only_ add `http://localhost:5000`
