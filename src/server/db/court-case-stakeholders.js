@@ -1,8 +1,13 @@
 import {Stakeholder} from "./models";
 import {fetchCaseById} from "./court-case";
+import {registerStakeholderWithCourtbot} from '../courtbot';
 
 export const createStakeholder = (stakeholder) =>
-    fetchCaseById(stakeholder.courtCaseId).then(courtCase => courtCase.stakeholders().attach(stakeholder));
+    fetchCaseById(stakeholder.courtCaseId)
+        .then(courtCase => courtCase.stakeholders()
+            .attach(stakeholder)
+            .then((stakeholder) => Promise.resolve({courtCase, stakeholder})))
+        .then(registerStakeholderWithCourtbot);
 
 export const getStakeholdersByCaseId = (courtCaseId) => Stakeholder.where({courtCaseId}).fetchAll();
 

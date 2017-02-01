@@ -32,6 +32,8 @@ heroku config:set AUTH0_COURTBOT_UI_CLIENT_ID=<auth0 courtbot ui client id>
 heroku config:set AUTH0_COURTBOT_SIGNING_CERT="<auth0 courtbot client signing cert>"
 heroku config:set AUTH0_COURTBOT_CLIENT_ID=<auth0 courtbot client id>
 heroku config:set AUTH0_COURTBOT_CLIENT_SECRET=<auth0 courtbot client secret>
+heroku config:set COURTBOT_BASE_URI=<courtbot url>
+heroku config:set COURTBOT_API_TOKEN=<courtbot api token>
 git push heroku master
 ```
 
@@ -56,14 +58,3 @@ OAuth2 authentication is provided by [Auth0](https://auth0.com) so these steps w
         * The domain, client ID, and client secret is the configuration for `AUTH0_DOMAIN`, `AUTH0_COURTBOT_CLIENT_ID`, and `AUTH0_COURTBOT_CLIENT_SECRET`. 
         * Under advanced settings > certificates, the signing certificate is the configuration for `AUTH0_COURTBOT_SIGNING_CERT`.
 
-## API Endpoints
-
-Two API endpoints are provided for Courtbot:
-
-1. `GET /v1/case/:caseNumber` - Retrieve all people associated with the given case number.
-1. `GET /v1/case/:caseNumber/person/:personName` - Retrieve all events (dates and descriptions) for the given case number and the specified person.
-
-API endpoints that this UI makes to Courtbot:
-
-1. `POST ???` - Register a case number, name, and phone number.
-1. Need update / delete?
