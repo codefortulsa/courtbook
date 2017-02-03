@@ -15,4 +15,4 @@ const courtbotRegistration = (courtCase, stakeholder) => ({
 });
 
 export const registerStakeholderWithCourtbot = ({courtCase, stakeholder}) =>
-    agent.post(`${courtbotBaseUri()}/courtbook/register`, courtbotRegistration(courtCase, stakeholder));
+    agent.post(`${courtbotBaseUri()}/courtbook/register`, courtbotRegistration(courtCase.attributes, stakeholder.attributes));

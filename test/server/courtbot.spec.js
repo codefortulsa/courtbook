@@ -1,4 +1,5 @@
 import {match} from "sinon";
+import {CourtCase, Stakeholder} from '../../src/server/db/models';
 import proxyquire from "proxyquire";
 import setup from "../setup";
 
@@ -10,8 +11,8 @@ describe("courtbot", () => {
     let restoreCourtbotBaseUri, restoreCourtbotApiToken;
 
     beforeEach(() => {
-        stakeholder = chance.stakeholder();
-        courtCase = chance.courtCase();
+        stakeholder = Stakeholder.forge(chance.stakeholder());
+        courtCase = CourtCase.forge(chance.courtCase());
         agent = {
             post: sandbox.stub().returns(Promise.resolve())
         };
@@ -43,8 +44,8 @@ describe("courtbot", () => {
 
             return promise.then(() => expect(agent.post)
                 .calledWithMatch(match.any, {
-                    contact: stakeholder.contact,
-                    communicationType: stakeholder.contactType
+                    contact: stakeholder.attributes.contact,
+                    communicationType: stakeholder.attributes.contactType
                 }));
         });
 
@@ -53,8 +54,8 @@ describe("courtbot", () => {
 
             return promise.then(() => expect(agent.post)
                 .calledWithMatch(match.any, {
-                    caseNumber: courtCase.caseNumber,
-                    name: courtCase.defendant
+                    caseNumber: courtCase.attributes.caseNumber,
+                    name: courtCase.attributes.defendant
                 }));
         });
 
