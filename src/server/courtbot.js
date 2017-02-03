@@ -15,4 +15,6 @@ const courtbotRegistration = (courtCase, stakeholder) => ({
 });
 
 export const registerStakeholderWithCourtbot = ({courtCase, stakeholder}) =>
-    agent.post(`${courtbotBaseUri()}/courtbook/register`, courtbotRegistration(courtCase.attributes, stakeholder.attributes));
+    agent.post(`${courtbotBaseUri()}/courtbook/register`, courtbotRegistration(courtCase.attributes, stakeholder.attributes))
+        .then(() => Promise.resolve({stakeholder, courtCase}),
+            () => Promise.reject("Could not register stakeholder with Courtbot."));

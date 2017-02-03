@@ -72,5 +72,14 @@ describe("courtbot", () => {
             return promise.then(() => expect(agent.post)
                 .calledWithMatch(match.any, {api_token: process.env.COURTBOT_API_TOKEN}));
         });
+
+        it("should resolve with court case and stakeholders", function() {
+            const promise = courtbotApi.registerStakeholderWithCourtbot({courtCase, stakeholder});
+
+            return promise.then((resolved) => {
+                expect(resolved.stakeholder).to.be.eql(stakeholder);
+                expect(resolved.courtCase).to.be.eql(courtCase);
+            });
+        });
     });
 });
