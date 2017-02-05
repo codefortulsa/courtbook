@@ -3,7 +3,8 @@ import {Field} from "redux-form";
 import {Col, Row} from "react-bootstrap";
 import {FieldGroup} from "../FieldGroup";
 
-const StakeholderForm = ({member, index}) => {
+const StakeholderForm = ({member, index, attributes}) => {
+    const disableEditing = !!attributes.id; // Disable editing existing stakeholder contact information
     const nameLabel = `Stakeholder Name ${index + 1}`;
     const phoneNumberLabel = `Stakeholder Cell Number ${index + 1}`;
 
@@ -15,12 +16,13 @@ const StakeholderForm = ({member, index}) => {
                 </div>
             </Col>
             <Col md={3}>
-                <Field name={`${member}.name`} id={`${member}.name`} label={nameLabel}
+                <Field name={`${member}.name`} id={`${member}.name`} label={nameLabel} disabled={disableEditing}
                        placeholder="Name" srOnly={true} required={true} component={FieldGroup}/>
             </Col>
             <Col md={6}>
                 <Field name={`${member}.contact`} id={`${member}.contact`} label={phoneNumberLabel}
-                       placeholder="Cell Number" srOnly={true} required={true} component={FieldGroup}/>
+                       disabled={disableEditing} placeholder="Cell Number" srOnly={true} required={true}
+                       component={FieldGroup}/>
             </Col>
         </Row>
     );

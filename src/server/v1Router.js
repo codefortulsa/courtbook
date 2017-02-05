@@ -61,11 +61,11 @@ router.route(`${casesBaseUrl}/:caseNumber/defendant/:defendant/events`)
 router.route(`${stakeholderBaseUrl}`)
     .post((req, res) =>
         createStakeholder(req.body)
-            .then((courtCase) => res.send(courtCase))
+            .then(({stakeholder}) => res.send((stakeholder)))
             .catch(handleError(res, "Failed to create court case stakeholders.")))
     .put((req, res) =>
         updateStakeholder(req.body)
-            .then(event => res.send(event))
+            .then(({stakeholder}) => res.send(stakeholder))
             .catch(handleError(res, "Failed to update stakeholder.")));
 
 router.route(`${stakeholderBaseUrl}/:id`)

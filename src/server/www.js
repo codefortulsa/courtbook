@@ -18,7 +18,8 @@ const localDevelopment = process.env.NODE_ENV !== 'production';
 if (localDevelopment) {
     const options = {
         publicPath: `/public`,
-        stats: {colors: true}
+        stats: {colors: true},
+        noInfo: true
     };
     app.use(webpackDevMiddleware(webpack(webpackConfig), options));
 }
