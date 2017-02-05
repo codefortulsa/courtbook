@@ -13,13 +13,12 @@ const validationState = (meta) => meta.touched && meta.error ? "error" : null;
  * @param required - Display field as being required (via CSS so screen readers will not pronounce the asterisk)
  * @param srOnly - Visually hide the label but still allow screen readers to read the label
  */
-export const FieldGroup = ({id, type = "text", input, label, meta, placeholder, required, srOnly}) => {
+export const FieldGroup = ({id, type = "text", input, label, meta, placeholder, required, srOnly, disabled}) => {
     const labelClassNameRequired = required ? "required" : "";
-
     return (
         <FormGroup controlId={id} validationState={validationState(meta)}>
             <ControlLabel className={labelClassNameRequired} srOnly={srOnly}>{label}</ControlLabel>
-            <FormControl type={type} placeholder={placeholder || label} {...input}/>
+            <FormControl type={type} placeholder={placeholder || label} disabled={disabled} {...input}/>
             {<HelpBlock>{meta.error}</HelpBlock>}
         </FormGroup>
     );

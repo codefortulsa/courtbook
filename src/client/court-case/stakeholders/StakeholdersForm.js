@@ -11,13 +11,14 @@ const StakeholdersForm = ({fields}) => (
             </Col>
             <Col xs={6}>
                 <div className="pull-right">
-                    <Button onClick={() => fields.push()}><Glyphicon glyph="plus"/> Add</Button>
+                    <Button onClick={() => fields.insert(0, {})}><Glyphicon glyph="plus"/> Add</Button>
                 </div>
             </Col>
         </Row>
         <Row>
             <Col md={12}>
-                {fields.map((field, index) => <StakeholderForm key={index} member={field} index={index}/>)}
+                {fields.map((field, index) => <StakeholderForm key={index} member={field} index={index}
+                                                               attributes={fields.get(index)}/>)}
             </Col>
         </Row>
     </div>
