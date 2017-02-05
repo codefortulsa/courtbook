@@ -7,7 +7,7 @@ import EventsForm from "./EventsForm";
 import {fetchAndSelectCourtCase} from "../../store/actions/CourtCaseActions";
 import {saveEvents} from "../../store/actions/EventActions";
 import {compose, lifecycle} from "recompose";
-
+import {eventValidation} from './eventValidation';
 const enhance = compose(
     lifecycle({
         componentDidMount: function () {
@@ -16,7 +16,7 @@ const enhance = compose(
         }
     }));
 
-const EditCourtCaseEvents = ({fields, caseNumber, defendant, handleSubmit}) => (
+const EditCourtCaseEvents = ({caseNumber, defendant, handleSubmit}) => (
     <Grid fluid>
         <div>
             <PageHeader>Case {caseNumber} Events{' '}
@@ -45,5 +45,6 @@ const mapStateToProps = (state, x, y) => ({
 export default connect(mapStateToProps, {fetchAndSelectCourtCase})(reduxForm({
     form: "editCourtCaseEventsForm",
     onSubmit: saveEvents,
-    enableReinitialize: true
+    enableReinitialize: true,
+    validate: eventValidation
 })(enhance(EditCourtCaseEvents)));
