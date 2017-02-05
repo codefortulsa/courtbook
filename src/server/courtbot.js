@@ -8,7 +8,7 @@ const courtbotApiToken = () => process.env.COURTBOT_API_TOKEN;
 const courtbotRegistration = (courtCase, stakeholder) => ({
     api_token: courtbotApiToken(),
     user: "courtbot",
-    caseNumber: courtCase.caseNumber,
+    case_number: courtCase.caseNumber,
     name: courtCase.defendant,
     contact: stakeholder.contact,
     communication_type: stakeholder.contactType

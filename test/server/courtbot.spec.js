@@ -54,7 +54,7 @@ describe("courtbot", () => {
 
             return promise.then(() => expect(agent.post)
                 .calledWithMatch(match.any, {
-                    caseNumber: courtCase.attributes.caseNumber,
+                    case_number: courtCase.attributes.caseNumber,
                     name: courtCase.attributes.defendant
                 }));
         });
