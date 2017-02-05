@@ -1,10 +1,12 @@
 import chai from "chai";
 import dirtyChai from "dirty-chai";
 import sinonChai from "sinon-chai";
+import chaiAsPromised from 'chai-as-promised';
 import sinon from "sinon";
 import Chance from "chance";
 import chanceMixin from "./chanceMixin";
 
+chai.use(chaiAsPromised);
 chai.use(sinonChai);
 chai.use(dirtyChai);
 

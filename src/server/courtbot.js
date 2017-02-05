@@ -11,10 +11,23 @@ const courtbotRegistration = (courtCase, stakeholder) => ({
     caseNumber: courtCase.caseNumber,
     name: courtCase.defendant,
     contact: stakeholder.contact,
-    communicationType: stakeholder.contactType
+    communication_type: stakeholder.contactType
 });
+
+const handleRegistrationRejected = (error) => {
+    console.error("Courtbot registration failed:", error, error.stack);
+    return Promise.reject("Could not register stakeholder with Courtbot");
+};
+
+const handleRegistrationResolved = (response) => {
+    const message = response.body.message;
+    if (response.body.success || message === "User has an existing registration") {
+        return Promise.resolve();
+    }
+    return handleRegistrationRejected(message);
+};
 
 export const registerStakeholderWithCourtbot = ({courtCase, stakeholder}) =>
     agent.post(`${courtbotBaseUri()}/courtbook/register`, courtbotRegistration(courtCase.attributes, stakeholder.attributes))
-        .then(() => Promise.resolve({stakeholder, courtCase}),
-            () => Promise.reject("Could not register stakeholder with Courtbot."));
+        .then(handleRegistrationResolved, handleRegistrationRejected)
+        .then(() => Promise.resolve({courtCase, stakeholder}));

@@ -14,7 +14,7 @@ describe("courtbot", () => {
         stakeholder = Stakeholder.forge(chance.stakeholder());
         courtCase = CourtCase.forge(chance.courtCase());
         agent = {
-            post: sandbox.stub().returns(Promise.resolve())
+            post: sandbox.stub().returns(Promise.resolve({body: {success: true, message: "Registration added"}}))
         };
         courtbotApi = proxyquire("../../src/server/courtbot", {superagent: agent});
 
@@ -30,7 +30,7 @@ describe("courtbot", () => {
         process.env.COURTBOT_API_TOKEN = restoreCourtbotApiToken;
     });
 
-    describe("registerStakeholderWithCourtbot", () => {
+    describe("register stakeholder with courbot", () => {
         it("should post to correct courtbot endpoint", function () {
             const promise = courtbotApi.registerStakeholderWithCourtbot({courtCase, stakeholder});
 
@@ -45,7 +45,7 @@ describe("courtbot", () => {
             return promise.then(() => expect(agent.post)
                 .calledWithMatch(match.any, {
                     contact: stakeholder.attributes.contact,
-                    communicationType: stakeholder.attributes.contactType
+                    communication_type: stakeholder.attributes.contactType
                 }));
         });
 
@@ -73,13 +73,45 @@ describe("courtbot", () => {
                 .calledWithMatch(match.any, {api_token: process.env.COURTBOT_API_TOKEN}));
         });
 
-        it("should resolve with court case and stakeholders", function() {
+        it("should resolve with court case and stakeholders", function () {
             const promise = courtbotApi.registerStakeholderWithCourtbot({courtCase, stakeholder});
 
             return promise.then((resolved) => {
+                expect(resolved).to.be.exist();
                 expect(resolved.stakeholder).to.be.eql(stakeholder);
                 expect(resolved.courtCase).to.be.eql(courtCase);
             });
         });
+
+        describe("courtbot responses", () => {
+            it("courtbot service call fails", () => {
+                agent.post.returns(Promise.reject(new Error("Unexpected error")));
+
+                const promise = courtbotApi.registerStakeholderWithCourtbot({courtCase, stakeholder});
+
+                return expect(promise).to.be.rejectedWith("Could not register stakeholder with Courtbot");
+            });
+
+            it("reject api token is invalid", () => {
+                agent.post.returns(Promise.resolve({
+                    body: {success: false, message: "Invalid API token."}
+                }));
+
+                const promise = courtbotApi.registerStakeholderWithCourtbot({courtCase, stakeholder});
+
+                return expect(promise).to.be.rejectedWith("Could not register stakeholder with Courtbot");
+            });
+
+            it("resolve when user has an existing registration", () => {
+                agent.post.returns(Promise.resolve({
+                    body: {success: false, message: "User has an existing registration"}
+                }));
+
+                const promise = courtbotApi.registerStakeholderWithCourtbot({courtCase, stakeholder});
+
+                return expect(promise).to.be.fulfilled();
+            });
+        });
+
     });
 });

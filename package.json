@@ -73,6 +73,7 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "chai-as-promised": "^6.0.0",
     "chance": "^1.0.4",
     "dirty-chai": "^1.2.2",
     "mocha": "^3.2.0",
