@@ -19,7 +19,7 @@ export const FieldGroup = ({id, type = "text", input, label, meta, placeholder, 
         <FormGroup controlId={id} validationState={validationState(meta)}>
             <ControlLabel className={labelClassNameRequired} srOnly={srOnly}>{label}</ControlLabel>
             <FormControl type={type} placeholder={placeholder || label} disabled={disabled} {...input}/>
-            {<HelpBlock>{meta.error}</HelpBlock>}
+            {<HelpBlock>{meta.touched && meta.error ? meta.error : ""}</HelpBlock>}
         </FormGroup>
     );
 };

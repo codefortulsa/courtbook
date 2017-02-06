@@ -3,7 +3,7 @@ import {Row, Col} from "react-bootstrap";
 import {Field} from "redux-form";
 import {FieldGroup} from "./FieldGroup";
 
-const PersonForm = () => (
+const CourtCaseForm = () => (
     <div>
         <Row>
             <Col md={6}>
@@ -16,4 +16,4 @@ const PersonForm = () => (
     </div>
 );
 
-export default PersonForm;
+export default CourtCaseForm;

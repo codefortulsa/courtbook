@@ -4,6 +4,7 @@ import {PageHeader, Button, Grid} from "react-bootstrap";
 import {reduxForm} from "redux-form";
 import CourtCaseForm from "./CourtCaseForm";
 import {createCourtCase} from "../store/actions/CourtCaseActions";
+import {courtCaseFormValidation} from './courtCaseFormValidation';
 
 const CreateCourtCases = ({handleSubmit}) => (
     <Grid fluid>
@@ -18,5 +19,6 @@ const CreateCourtCases = ({handleSubmit}) => (
 );
 
 export default connect(undefined, {onSubmit: createCourtCase})(reduxForm({
-    form: "courtCasesForm"
+    form: "courtCasesForm",
+    validate: courtCaseFormValidation
 })(CreateCourtCases));

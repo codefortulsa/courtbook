@@ -7,6 +7,7 @@ import StakeholdersForm from "./StakeholdersForm";
 import {fetchAndSelectCourtCase} from "../../store/actions/CourtCaseActions";
 import {saveStakeholders} from "../../store/actions/StakeholderActions";
 import {compose, lifecycle} from "recompose";
+import {stakeholderValidation} from './stakeholderValidation';
 
 const enhance = compose(
     lifecycle({
@@ -45,5 +46,6 @@ const mapStateToProps = (state, x, y) => ({
 export default connect(mapStateToProps, {fetchAndSelectCourtCase})(reduxForm({
     form: "editStakeholdersForm",
     onSubmit: saveStakeholders,
-    enableReinitialize: true
+    enableReinitialize: true,
+    validate: stakeholderValidation
 })(enhance(EditCourtCaseStakeholders)));
