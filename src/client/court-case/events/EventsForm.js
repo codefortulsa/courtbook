@@ -5,7 +5,7 @@ import "../../style/styles.less";
 
 const cardSize = {sm: 6, md: 4, lg: 3};
 
-const EventsForm = ({fields}) => console.info("fields", fields.get(0)) || (
+const EventsForm = ({fields}) => (
     <Row>
         {fields.map((field, index) =>
             <Col key={index} {...cardSize}><EventForm member={field} index={index} remove={()=>{fields.remove(index)}}/></Col>
