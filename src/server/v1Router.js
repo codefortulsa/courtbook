@@ -91,4 +91,7 @@ router.route(`${eventsBaseUrl}/:courtCaseEventId`)
             .then(() => res.send("OK"))
             .catch(handleError(res, "Failed to delete event.")));
 
+router.route(`${baseUrl}/*`)
+    .all((req, res) => res.status(404).send("No REST endpoint exists here."));
+
 export default router;
