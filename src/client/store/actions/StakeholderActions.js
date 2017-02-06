@@ -23,7 +23,7 @@ const updateStakeholders = (stakeholders) => {
     return Promise.all(_.map(stakeholdersToUpdate, updateStakeholder));
 };
 
-export const saveStakeholders = ({courtCaseId, stakeholders, existingStakeholderIds}) => console.info("stakeholders", stakeholders) || ({
+export const saveStakeholders = ({courtCaseId, stakeholders, existingStakeholderIds}) => ({
     type: SAVE_STAKEHOLDERS,
     payload: Promise.all([
         createNewStakeholders(courtCaseId, stakeholders),

@@ -1,9 +1,13 @@
+import {getLogger} from 'log4js';
 import agent from "superagent";
 import superagentAsPromised from "superagent-as-promised";
 superagentAsPromised(agent, Promise);
 
 const courtbotBaseUri = () => process.env.COURTBOT_BASE_URI;
 const courtbotApiToken = () => process.env.COURTBOT_API_TOKEN;
+
+const log = getLogger("courtbot");
+
 
 const courtbotRegistration = (courtCase, stakeholder) => ({
     api_token: courtbotApiToken(),
@@ -15,7 +19,7 @@ const courtbotRegistration = (courtCase, stakeholder) => ({
 });
 
 const handleRegistrationRejected = (error) => {
-    console.error("Courtbot registration failed:", error, error.stack);
+    log.error("Courtbot registration failed", error);
     return Promise.reject("Could not register stakeholder with Courtbot");
 };
 
