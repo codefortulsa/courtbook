@@ -3,6 +3,10 @@ import {Button, Glyphicon, Row, Col} from "react-bootstrap";
 import StakeholderForm from "./StakeholderForm";
 import "../../style/styles.less";
 
+const newStakeholder = {
+    contactType: "sms"
+};
+
 const StakeholdersForm = ({fields}) => (
     <div>
         <Row>
@@ -11,7 +15,7 @@ const StakeholdersForm = ({fields}) => (
             </Col>
             <Col xs={6}>
                 <div className="pull-right">
-                    <Button onClick={() => fields.insert(0, {})}><Glyphicon glyph="plus"/> Add</Button>
+                    <Button onClick={() => fields.insert(0, newStakeholder)}><Glyphicon glyph="plus"/> Add</Button>
                 </div>
             </Col>
         </Row>
