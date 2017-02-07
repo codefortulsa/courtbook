@@ -8,6 +8,7 @@ import {fetchAndSelectCourtCase} from "../../store/actions/CourtCaseActions";
 import {saveEvents} from "../../store/actions/EventActions";
 import {compose, lifecycle} from "recompose";
 import {eventValidation} from './eventValidation';
+
 const enhance = compose(
     lifecycle({
         componentDidMount: function () {
@@ -42,7 +43,7 @@ const mapStateToProps = (state, x, y) => ({
     }
 });
 
-export default connect(mapStateToProps, {fetchAndSelectCourtCase})(reduxForm({
+export default connect(mapStateToProps, {fetchAndSelectCourtCase, saveEvents})(reduxForm({
     form: "editCourtCaseEventsForm",
     onSubmit: saveEvents,
     enableReinitialize: true,

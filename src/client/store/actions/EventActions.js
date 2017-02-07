@@ -1,4 +1,5 @@
 import _ from "lodash";
+import {navigateEditStakeholders} from './NavigationActions';
 import {deleteEventById, updateEvent, createEvent} from "../../courtbook-api";
 
 export const SAVE_EVENTS = "SAVE_EVENTS";
@@ -23,11 +24,11 @@ const updateEvents = (events) => {
     return Promise.all(_.map(eventsToUpdate, updateEvent));
 };
 
-export const saveEvents = ({courtCaseId, events, existingEventIds}) => ({
+export const saveEvents = ({courtCaseId, events, existingEventIds}, dispatch) => ({
     type: SAVE_EVENTS,
     payload: Promise.all([
         createNewEvents(courtCaseId, events),
         deleteEvents(events, existingEventIds),
         updateEvents(events)
-    ])
+    ]).then(() => dispatch(navigateEditStakeholders(courtCaseId)))
 });

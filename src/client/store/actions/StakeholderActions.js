@@ -1,4 +1,5 @@
 import _ from "lodash";
+import {navigateHome} from './NavigationActions';
 import {deleteStakeholderById, updateStakeholder, createStakeholder} from "../../courtbook-api";
 
 export const SAVE_STAKEHOLDERS = "SAVE_STAKEHOLDERS";
@@ -23,11 +24,11 @@ const updateStakeholders = (stakeholders) => {
     return Promise.all(_.map(stakeholdersToUpdate, updateStakeholder));
 };
 
-export const saveStakeholders = ({courtCaseId, stakeholders, existingStakeholderIds}) => ({
+export const saveStakeholders = ({courtCaseId, stakeholders, existingStakeholderIds}, dispatch) => ({
     type: SAVE_STAKEHOLDERS,
     payload: Promise.all([
         createNewStakeholders(courtCaseId, stakeholders),
         deleteStakeholders(stakeholders, existingStakeholderIds),
         updateStakeholders(stakeholders)
-    ])
+    ]).then(() => dispatch(navigateHome()))
 });
