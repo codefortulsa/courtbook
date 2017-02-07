@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "./Header";
 import Footer from "./Footer";
+import Notifications from "./Notifications";
 
 const Container = ({route, children}) => {
     if (children) {
@@ -12,6 +13,7 @@ const Container = ({route, children}) => {
     return (
         <div className="container-fluid">
             <Header/>
+            <Notifications/>
             {children}
             <Footer/>
         </div>
