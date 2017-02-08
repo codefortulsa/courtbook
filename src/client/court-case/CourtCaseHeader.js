@@ -12,7 +12,7 @@ export const CourtCaseHeader = ({caseNumber, defendant, children}) =>
 CourtCaseHeader.displayName = "CourtCaseHeader";
 
 CourtCaseHeader.propTypes = {
-    caseNumber: React.PropTypes.string,
-    defendant: React.PropTypes.string,
+    caseNumber: React.PropTypes.string.isRequired,
+    defendant: React.PropTypes.string.isRequired,
     buttons: React.PropTypes.element
 };
