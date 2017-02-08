@@ -1,39 +1,29 @@
 import _ from "lodash";
 import React from "react";
 import {connect} from "react-redux";
-import {PageHeader, Button, ButtonToolbar, Grid} from "react-bootstrap";
+import {Button, ButtonToolbar, Grid} from "react-bootstrap";
 import {reduxForm, FieldArray} from "redux-form";
 import EventsForm from "./EventsForm";
 import {fetchAndSelectCourtCase} from "../../store/actions/CourtCaseActions";
 import {saveEvents} from "../../store/actions/EventActions";
-import {compose, lifecycle} from "recompose";
-import {eventValidation} from './eventValidation';
-
-const enhance = compose(
-    lifecycle({
-        componentDidMount: function () {
-            const {fetchAndSelectCourtCase, params: {id}} = this.props;
-            fetchAndSelectCourtCase(id);
-        }
-    }));
+import {eventValidation} from "./eventValidation";
+import {CourtCaseHeader} from "../CourtCaseHeader";
+import {enhanceWithFetchCourtCase} from "../enhanceWithFetchCourtCase";
 
 const EditCourtCaseEvents = ({caseNumber, defendant, handleSubmit}) => (
     <Grid fluid>
         <div>
-            <PageHeader>Case {caseNumber} Events{' '}
-                <small>Defendant: {defendant}</small>
-                <div className="pull-right">
-                    <ButtonToolbar>
-                        <Button id="create" bsStyle="primary" onClick={handleSubmit}>Save</Button>
-                    </ButtonToolbar>
-                </div>
-            </PageHeader>
+            <CourtCaseHeader caseNumber={caseNumber} defendant={defendant}>
+                <ButtonToolbar>
+                    <Button id="create" bsStyle="primary" onClick={handleSubmit}>Save</Button>
+                </ButtonToolbar>
+            </CourtCaseHeader>
         </div>
         <FieldArray name="events" component={EventsForm}/>
     </Grid>
 );
 
-const mapStateToProps = (state, x, y) => ({
+const mapStateToProps = (state) => ({
     caseNumber: state.selectedCase.courtCase.caseNumber,
     defendant: state.selectedCase.courtCase.defendant,
     initialValues: {
@@ -48,4 +38,4 @@ export default connect(mapStateToProps, {fetchAndSelectCourtCase, saveEvents})(r
     onSubmit: saveEvents,
     enableReinitialize: true,
     validate: eventValidation
-})(enhance(EditCourtCaseEvents)));
+})(enhanceWithFetchCourtCase(EditCourtCaseEvents)));

@@ -1,5 +1,5 @@
 import _ from "lodash";
-import {navigateEditStakeholders} from './NavigationActions';
+import {navigateViewCourtCase} from './NavigationActions';
 import {deleteEventById, updateEvent, createEvent} from "../../courtbook-api";
 
 export const SAVE_EVENTS = "SAVE_EVENTS";
@@ -30,5 +30,5 @@ export const saveEvents = ({courtCaseId, events, existingEventIds}, dispatch) =>
         createNewEvents(courtCaseId, events),
         deleteEvents(events, existingEventIds),
         updateEvents(events)
-    ]).then(() => dispatch(navigateEditStakeholders(courtCaseId)))
+    ]).then(() => dispatch(navigateViewCourtCase(courtCaseId)))
 });

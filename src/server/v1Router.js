@@ -6,12 +6,20 @@ import {
     fetchCaseByLikeCaseNumberAndLikeDefendant
 } from "./db/court-case";
 import {createEvent, getEventsByCaseId, deleteEventById, updateEvent} from "./db/court-case-events";
-import {createStakeholder, getStakeholdersByCaseId, deleteStakeholderById, updateStakeholder} from "./db/court-case-stakeholders";
+import {
+    createStakeholder,
+    getStakeholdersByCaseId,
+    deleteStakeholderById,
+    updateStakeholder
+} from "./db/court-case-stakeholders";
+
+import {getLogger} from 'log4js';
+const log = getLogger("v1Router");
 
 const router = express.Router();
 
 const handleError = (res, message) => (err) => {
-    console.error(message, err);
+    log.error(message, err);
     res.status(500).send(message);
 };
 
