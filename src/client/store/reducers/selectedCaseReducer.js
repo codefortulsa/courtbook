@@ -2,7 +2,8 @@ import {SELECT_COURT_CASE} from "../actions/CourtCaseActions";
 
 const initialState = {
     courtCase: {},
-    events: []
+    events: [],
+    stakeholders: []
 };
 
 export default (state = initialState, action) => {
