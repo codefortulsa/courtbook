@@ -8,6 +8,6 @@ export const navigateViewCourtCase = (courtCaseId) => push(`/court-case/${courtC
 
 export const navigateAddCourtCase = () => push('/court-case/add');
 
-export const navigateAddCaseEvents = (courtCaseId) => push(`/court-case/${courtCaseId}/edit-events`);
+export const navigateEditEvents = (courtCaseId) => push(`/court-case/${courtCaseId}/edit-events`);
 
 export const navigateEditStakeholders = (courtCaseId) => push(`/court-case/${courtCaseId}/edit-stakeholders`);

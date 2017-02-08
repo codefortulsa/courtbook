@@ -1,5 +1,6 @@
 import React from "react";
-import {Col, Row, ListGroup, ListGroupItem, Button} from 'react-bootstrap';
+import {Col, Row, Button} from "react-bootstrap";
+import {StakeholderList} from "./StakeholderList";
 
 export const ViewStakeholders = ({stakeholders, navigateEditStakeholders}) => (
     <div><Row>
@@ -14,11 +15,7 @@ export const ViewStakeholders = ({stakeholders, navigateEditStakeholders}) => (
     </Row>
         <Row>
             <Col md={12}>
-                <ListGroup>
-                    {stakeholders.map(stakeholder =>
-                        <ListGroupItem header={stakeholder.name}>{stakeholder.contact}</ListGroupItem>
-                    )}
-                </ListGroup>
+                <StakeholderList stakeholders={stakeholders}/>
             </Col>
         </Row>
     </div>

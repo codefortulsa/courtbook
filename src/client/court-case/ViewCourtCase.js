@@ -1,12 +1,20 @@
 import React from "react";
 import {connect} from "react-redux";
 import {PageHeader, Grid, Col, Row} from "react-bootstrap";
-import {ViewStakeholders} from './stakeholders/ViewStakeholders';
+import {ViewStakeholders} from "./stakeholders/ViewStakeholders";
+import {ViewEvents} from "./events/ViewEvents";
 import {fetchAndSelectCourtCase} from "../store/actions/CourtCaseActions";
 import {enhanceWithFetchCourtCase} from "./enhanceWithFetchCourtCase";
-import {navigateEditStakeholders} from '../../client/store/actions/NavigationActions';
+import {navigateEditStakeholders, navigateEditEvents} from "../../client/store/actions/NavigationActions";
 
-const ViewCourtCase = ({caseNumber, defendant, events, stakeholders, navigateEditStakeholders}) => (
+const ViewCourtCase = ({
+    caseNumber,
+    defendant,
+    events,
+    stakeholders,
+    navigateEditStakeholders,
+    navigateEditEvents
+}) => (
     <Grid fluid>
         <Row>
             <Col md={12}>
@@ -17,7 +25,8 @@ const ViewCourtCase = ({caseNumber, defendant, events, stakeholders, navigateEdi
         </Row>
         <Row>
             <Col md={6}>
-                {/*<ViewEvents events={events}/>*/}
+                <ViewEvents events={events}
+                            navigateEditEvents={navigateEditEvents}/>
             </Col>
             <Col md={6}>
                 <ViewStakeholders stakeholders={stakeholders}
@@ -36,7 +45,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch, {params: {id}}) => ({
     fetchAndSelectCourtCase: (id) => dispatch(fetchAndSelectCourtCase(id)),
-    navigateEditStakeholders: () => dispatch(navigateEditStakeholders(id))
+    navigateEditStakeholders: () => dispatch(navigateEditStakeholders(id)),
+    navigateEditEvents: () => console.info("navigateEditEvents") || dispatch(navigateEditEvents(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(enhanceWithFetchCourtCase(ViewCourtCase));
