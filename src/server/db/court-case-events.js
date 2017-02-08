@@ -1,6 +1,14 @@
 import {CourtCaseEvent} from "./models";
 import {fetchCaseById} from "./court-case";
 
+export const getUpcomingEvents = () =>
+    CourtCaseEvent
+        .query((qb) => qb.limit(25)
+            .whereRaw("date >= current_timestamp")
+            .whereRaw("date <= (current_timestamp + interval '1 month')"))
+        .orderBy('date', 'ASC')
+        .fetchAll();
+
 export const createEvent = (courtCaseEvent) =>
     fetchCaseById(courtCaseEvent.courtCaseId).then(courtCase => courtCase.courtCaseEvents().attach(courtCaseEvent));
 

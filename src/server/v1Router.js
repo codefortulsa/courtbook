@@ -5,15 +5,20 @@ import {
     fetchCaseById,
     fetchCaseByLikeCaseNumberAndLikeParty
 } from "./db/court-case";
-import {createEvent, getEventsByCaseId, deleteEventById, updateEvent} from "./db/court-case-events";
+import {
+    createEvent,
+    getEventsByCaseId,
+    deleteEventById,
+    updateEvent,
+    getUpcomingEvents
+} from "./db/court-case-events";
 import {
     createStakeholder,
     getStakeholdersByCaseId,
     deleteStakeholderById,
     updateStakeholder
 } from "./db/court-case-stakeholders";
-
-import {getLogger} from 'log4js';
+import {getLogger} from "log4js";
 const log = getLogger("v1Router");
 
 const router = express.Router();
@@ -82,6 +87,13 @@ router.route(`${stakeholderBaseUrl}/:id`)
             .then(() => res.send("OK"))
             .catch(handleError(res, "Failed to delete stakeholder.")));
 
+
+router.route(`${eventsBaseUrl}/upcoming`)
+    .get((req, res) =>
+        getUpcomingEvents()
+            .then(events => res.send(events))
+            .catch(handleError(res, "Failed to fetch upcoming events."))
+    );
 
 router.route(`${eventsBaseUrl}`)
     .post((req, res) =>
