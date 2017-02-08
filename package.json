@@ -5,7 +5,8 @@
   "main": "src/server/www.js",
   "style": "dist/css/bootstrap.css",
   "scripts": {
-    "test": "npm run db-migrate && mocha",
+    "test": "npm run db-migrate && nyc mocha",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "test:dev": "npm run db-migrate && mocha --watch",
     "dev": "npm run db-migrate && nodemon src/server/www.js --exec babel-node --watch src/server",
     "db-migrate": "db-migrate up",
@@ -79,9 +80,12 @@
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
     "chance": "^1.0.4",
+    "coveralls": "^2.11.16",
     "dirty-chai": "^1.2.2",
+    "istanbul": "^0.4.5",
     "mocha": "^3.2.0",
     "nodemon": "^1.11.0",
+    "nyc": "^10.1.2",
     "proxyquire": "^1.7.11",
     "sinon": "^1.15.4",
     "sinon-chai": "^2.8.0"
