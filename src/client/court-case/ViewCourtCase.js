@@ -46,7 +46,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch, {params: {id}}) => ({
     fetchAndSelectCourtCase: (id) => dispatch(fetchAndSelectCourtCase(id)),
     navigateEditStakeholders: () => dispatch(navigateEditStakeholders(id)),
-    navigateEditEvents: () => console.info("navigateEditEvents") || dispatch(navigateEditEvents(id))
+    navigateEditEvents: () => dispatch(navigateEditEvents(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(enhanceWithFetchCourtCase(ViewCourtCase));

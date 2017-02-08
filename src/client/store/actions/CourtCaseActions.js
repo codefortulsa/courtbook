@@ -1,4 +1,4 @@
-import {navigateEditEvents} from "./NavigationActions";
+import {navigateViewCourtCase} from "./NavigationActions";
 import {fetchCourtCaseById, createCase, fetchEventsByCourtCaseId, fetchStakeholdersByCourtCaseId} from "../../courtbook-api";
 
 export const CREATE_COURT_CASE = "CREATE_COURT_CASE";
@@ -7,7 +7,7 @@ export const SELECT_COURT_CASE = "SELECT_COURT_CASE";
 export const createCourtCase = (courtCase) => (dispatch) => ({
     type: "CREATE_COURT_CASE",
     payload: createCase(courtCase)
-        .then((createdCourtCase) => dispatch(navigateEditEvents(createdCourtCase.id)))
+        .then((createdCourtCase) => dispatch(navigateViewCourtCase(createdCourtCase.id)))
 });
 
 export const fetchAndSelectCourtCase = (courtCaseId) => (dispatch) => {
