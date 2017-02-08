@@ -10,7 +10,7 @@ import {CourtCaseHeader} from "./CourtCaseHeader";
 
 const ViewCourtCase = ({
     caseNumber,
-    defendant,
+    party,
     events,
     stakeholders,
     navigateEditStakeholders,
@@ -19,7 +19,7 @@ const ViewCourtCase = ({
     <Grid fluid>
         <Row>
             <Col md={12}>
-                <CourtCaseHeader caseNumber={caseNumber} defendant={defendant}/>
+                <CourtCaseHeader caseNumber={caseNumber} party={party}/>
             </Col>
         </Row>
         <Row>
@@ -37,7 +37,7 @@ const ViewCourtCase = ({
 
 const mapStateToProps = (state) => ({
     caseNumber: state.selectedCase.courtCase.caseNumber,
-    defendant: state.selectedCase.courtCase.defendant,
+    party: state.selectedCase.courtCase.party,
     stakeholders: state.selectedCase.stakeholders,
     events: state.selectedCase.events
 });

@@ -3,7 +3,7 @@ export default {
         return {
             id: this.integer(),
             caseNumber: this.guid(),
-            defendant: this.name()
+            party: this.name()
         };
     },
     stakeholder: function () {

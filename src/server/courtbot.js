@@ -13,7 +13,7 @@ const courtbotRegistration = (courtCase, stakeholder) => ({
     api_token: courtbotApiToken(),
     user: "courtbot",
     case_number: courtCase.caseNumber,
-    name: courtCase.defendant,
+    name: courtCase.party,
     contact: stakeholder.contact,
     communication_type: stakeholder.contactType
 });

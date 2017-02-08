@@ -10,9 +10,9 @@ import {stakeholderValidation} from "./stakeholderValidation";
 import {enhanceWithFetchCourtCase} from "../enhanceWithFetchCourtCase";
 import {CourtCaseHeader} from "../CourtCaseHeader";
 
-const EditCourtCaseStakeholders = ({fields, caseNumber, defendant, handleSubmit}) => (
+const EditCourtCaseStakeholders = ({fields, caseNumber, party, handleSubmit}) => (
     <Grid fluid>
-        <CourtCaseHeader caseNumber={caseNumber} defendant={defendant}>
+        <CourtCaseHeader caseNumber={caseNumber} party={party}>
             <ButtonToolbar>
                 <Button id="create" bsStyle="primary" onClick={handleSubmit}>Save</Button>
             </ButtonToolbar>
@@ -23,7 +23,7 @@ const EditCourtCaseStakeholders = ({fields, caseNumber, defendant, handleSubmit}
 
 const mapStateToProps = (state) => ({
     caseNumber: state.selectedCase.courtCase.caseNumber,
-    defendant: state.selectedCase.courtCase.defendant,
+    party: state.selectedCase.courtCase.party,
     initialValues: {
         existingStakeholderIds: _.map(state.selectedCase.stakeholders, "id"),
         courtCaseId: state.selectedCase.courtCase.id,

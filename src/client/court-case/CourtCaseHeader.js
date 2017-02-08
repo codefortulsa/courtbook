@@ -1,9 +1,9 @@
 import React from "react";
 import {PageHeader} from "react-bootstrap";
 
-export const CourtCaseHeader = ({caseNumber, defendant, children}) =>
+export const CourtCaseHeader = ({caseNumber, party, children}) =>
     <PageHeader>Case {caseNumber}{' '}
-        <small>Defendant: {defendant}</small>
+        <small>Party: {party}</small>
         <div className="pull-right">
             {children}
         </div>
@@ -13,6 +13,6 @@ CourtCaseHeader.displayName = "CourtCaseHeader";
 
 CourtCaseHeader.propTypes = {
     caseNumber: React.PropTypes.string.isRequired,
-    defendant: React.PropTypes.string.isRequired,
+    party: React.PropTypes.string.isRequired,
     buttons: React.PropTypes.element
 };
