@@ -1,11 +1,12 @@
 import React from "react";
 import {connect} from "react-redux";
-import {PageHeader, Grid, Col, Row} from "react-bootstrap";
+import {Grid, Col, Row} from "react-bootstrap";
 import {ViewStakeholders} from "./stakeholders/ViewStakeholders";
 import {ViewEvents} from "./events/ViewEvents";
 import {fetchAndSelectCourtCase} from "../store/actions/CourtCaseActions";
 import {enhanceWithFetchCourtCase} from "./enhanceWithFetchCourtCase";
 import {navigateEditStakeholders, navigateEditEvents} from "../../client/store/actions/NavigationActions";
+import {CourtCaseHeader} from "./CourtCaseHeader";
 
 const ViewCourtCase = ({
     caseNumber,
@@ -18,9 +19,7 @@ const ViewCourtCase = ({
     <Grid fluid>
         <Row>
             <Col md={12}>
-                <PageHeader>Court case {caseNumber}{' '}
-                    <small>Defendant: {defendant}</small>
-                </PageHeader>
+                <CourtCaseHeader caseNumber={caseNumber} defendant={defendant}/>
             </Col>
         </Row>
         <Row>

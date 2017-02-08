@@ -1,39 +1,27 @@
 import _ from "lodash";
 import React from "react";
 import {connect} from "react-redux";
-import {PageHeader, Button, ButtonToolbar, Grid} from "react-bootstrap";
+import {Button, ButtonToolbar, Grid} from "react-bootstrap";
 import {reduxForm, FieldArray} from "redux-form";
 import StakeholdersForm from "./StakeholdersForm";
 import {fetchAndSelectCourtCase} from "../../store/actions/CourtCaseActions";
 import {saveStakeholders} from "../../store/actions/StakeholderActions";
-import {compose, lifecycle} from "recompose";
-import {stakeholderValidation} from './stakeholderValidation';
-
-const enhance = compose(
-    lifecycle({
-        componentDidMount: function () {
-            const {fetchAndSelectCourtCase, params: {id}} = this.props;
-            fetchAndSelectCourtCase(id);
-        }
-    }));
+import {stakeholderValidation} from "./stakeholderValidation";
+import {enhanceWithFetchCourtCase} from "../enhanceWithFetchCourtCase";
+import {CourtCaseHeader} from "../CourtCaseHeader";
 
 const EditCourtCaseStakeholders = ({fields, caseNumber, defendant, handleSubmit}) => (
     <Grid fluid>
-        <div>
-            <PageHeader>Stakeholders{' '}
-                <small>Case: {caseNumber} &bull; Defendant: {defendant}</small>
-                <div className="pull-right">
-                    <ButtonToolbar>
-                        <Button id="create" bsStyle="primary" onClick={handleSubmit}>Save</Button>
-                    </ButtonToolbar>
-                </div>
-            </PageHeader>
-        </div>
+        <CourtCaseHeader caseNumber={caseNumber} defendant={defendant}>
+            <ButtonToolbar>
+                <Button id="create" bsStyle="primary" onClick={handleSubmit}>Save</Button>
+            </ButtonToolbar>
+        </CourtCaseHeader>
         <FieldArray name="stakeholders" component={StakeholdersForm}/>
     </Grid>
 );
 
-const mapStateToProps = (state, x, y) => ({
+const mapStateToProps = (state) => ({
     caseNumber: state.selectedCase.courtCase.caseNumber,
     defendant: state.selectedCase.courtCase.defendant,
     initialValues: {
@@ -48,4 +36,4 @@ export default connect(mapStateToProps, {fetchAndSelectCourtCase})(reduxForm({
     onSubmit: saveStakeholders,
     enableReinitialize: true,
     validate: stakeholderValidation
-})(enhance(EditCourtCaseStakeholders)));
+})(enhanceWithFetchCourtCase(EditCourtCaseStakeholders)));
