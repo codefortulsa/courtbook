@@ -5,10 +5,10 @@ export const fetchAllCasesByLikeCaseNumber = (caseNumber) =>
         .query(qb => qb.whereRaw(`LOWER("caseNumber") LIKE LOWER(?)`, [`%${caseNumber}%`]))
         .fetchAll();
 
-export const fetchCaseByLikeCaseNumberAndLikeDefendant = (caseNumber, defendant) =>
+export const fetchCaseByLikeCaseNumberAndLikeParty = (caseNumber, party) =>
     CourtCase.query(qb => qb
         .whereRaw(`LOWER("caseNumber") LIKE LOWER(?)`, [`%${caseNumber}%`])
-        .whereRaw(`LOWER("defendant") LIKE LOWER(?)`, [`%${defendant}%`])
+        .whereRaw(`LOWER("party") LIKE LOWER(?)`, [`%${party}%`])
     ).fetch();
 
 export const createCourtCase = (courtCase) => CourtCase.forge(courtCase).save(null);

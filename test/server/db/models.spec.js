@@ -12,7 +12,7 @@ describe("models", function () {
             .save(null)
             .then(actual => {
                 expect(actual.attributes.id).to.exist();
-                expect(actual.attributes.defendant).to.eql(courtCase.defendant);
+                expect(actual.attributes.party).to.eql(courtCase.party);
                 expect(actual.attributes.caseNumber).to.eql(courtCase.caseNumber);
             });
     });
@@ -35,8 +35,8 @@ describe("models", function () {
                 console.info("Case attrs=", courtCase.attributes);
                 console.info("Case fns=", _.functions(courtCase));
                 console.info("Case keys=", _.keys(courtCase));
-                return x.set({defendant: "XYZ"}).save();
-                // return x.save({defendant: "XYZ"})
+                return x.set({party: "XYZ"}).save();
+                // return x.save({party: "XYZ"})
             });
         console.info("x=", x);
         console.info("y=", y);
@@ -44,7 +44,7 @@ describe("models", function () {
     });
 
     const randomCourtCase = () => ({
-        defendant: chance.name(),
+        party: chance.name(),
         caseNumber: chance.guid()
     });
 

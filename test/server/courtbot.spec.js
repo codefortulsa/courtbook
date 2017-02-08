@@ -49,13 +49,13 @@ describe("courtbot", () => {
                 }));
         });
 
-        it("should register with case number and defendant", function () {
+        it("should register with case number and party", function () {
             const promise = courtbotApi.registerStakeholderWithCourtbot({courtCase, stakeholder});
 
             return promise.then(() => expect(agent.post)
                 .calledWithMatch(match.any, {
                     case_number: courtCase.attributes.caseNumber,
-                    name: courtCase.attributes.defendant
+                    name: courtCase.attributes.party
                 }));
         });
 

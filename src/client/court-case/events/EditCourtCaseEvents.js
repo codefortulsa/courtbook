@@ -10,10 +10,10 @@ import {eventValidation} from "./eventValidation";
 import {CourtCaseHeader} from "../CourtCaseHeader";
 import {enhanceWithFetchCourtCase} from "../enhanceWithFetchCourtCase";
 
-const EditCourtCaseEvents = ({caseNumber, defendant, handleSubmit}) => (
+const EditCourtCaseEvents = ({caseNumber, party, handleSubmit}) => (
     <Grid fluid>
         <div>
-            <CourtCaseHeader caseNumber={caseNumber} defendant={defendant}>
+            <CourtCaseHeader caseNumber={caseNumber} party={party}>
                 <ButtonToolbar>
                     <Button id="create" bsStyle="primary" onClick={handleSubmit}>Save</Button>
                 </ButtonToolbar>
@@ -25,7 +25,7 @@ const EditCourtCaseEvents = ({caseNumber, defendant, handleSubmit}) => (
 
 const mapStateToProps = (state) => ({
     caseNumber: state.selectedCase.courtCase.caseNumber,
-    defendant: state.selectedCase.courtCase.defendant,
+    party: state.selectedCase.courtCase.party,
     initialValues: {
         existingEventIds: _.map(state.selectedCase.events, "id"),
         courtCaseId: state.selectedCase.courtCase.id,

@@ -3,7 +3,7 @@ import {
     fetchAllCasesByLikeCaseNumber,
     createCourtCase,
     fetchCaseById,
-    fetchCaseByLikeCaseNumberAndLikeDefendant
+    fetchCaseByLikeCaseNumberAndLikeParty
 } from "./db/court-case";
 import {createEvent, getEventsByCaseId, deleteEventById, updateEvent} from "./db/court-case-events";
 import {
@@ -59,12 +59,12 @@ router.route(`${casesBaseUrl}/:courtCaseId/stakeholders`)
             .then(stakeholders => res.send(stakeholders))
             .catch(handleError(res, "Failed to fetch stakeholders.")));
 
-router.route(`${casesBaseUrl}/:caseNumber/defendant/:defendant/events`)
+router.route(`${casesBaseUrl}/:caseNumber/party/:party/events`)
     .get((req, res) =>
-        fetchCaseByLikeCaseNumberAndLikeDefendant(req.params.caseNumber, req.params.defendant)
+        fetchCaseByLikeCaseNumberAndLikeParty(req.params.caseNumber, req.params.party)
             .then(courtCase => courtCase ? getEventsByCaseId(courtCase.id) : [])
             .then(courtCaseEvents => res.send(courtCaseEvents))
-            .catch(handleError(res, "Failed to get events for case number and defendant.")));
+            .catch(handleError(res, "Failed to get events for case number and party.")));
 
 router.route(`${stakeholderBaseUrl}`)
     .post((req, res) =>
