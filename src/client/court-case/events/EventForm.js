@@ -1,13 +1,14 @@
 import React from "react";
 import {Field} from "redux-form";
 import {Panel, Col, Row, Glyphicon, Button} from "react-bootstrap";
-import {FieldGroup} from "../FieldGroup";
+import {InputFieldGroup} from "../FieldGroup";
 
 const EventForm = ({member, index, remove}) => {
     const header =
         <div>
             Event {index + 1}
-            <div className="pull-right"><Button onClick={remove} bsStyle="link"><Glyphicon glyph="trash"/></Button></div>
+            <div className="pull-right"><Button onClick={remove} bsStyle="link"><Glyphicon glyph="trash"/></Button>
+            </div>
         </div>;
 
 
@@ -18,13 +19,13 @@ const EventForm = ({member, index, remove}) => {
             <Row>
                 <Col md={12}>
                     <Field name={`${member}.date`} id={`${member}.date`} label={dateLabel}
-                           placeholder="Date" srOnly={true} required={true} component={FieldGroup}/>
+                           placeholder="Date" srOnly={true} required={true} component={InputFieldGroup}/>
                 </Col>
             </Row>
             <Row>
                 <Col md={12}>
                     <Field name={`${member}.description`} id={`${member}.description`} label={descLabel}
-                           placeholder="Description" srOnly={true} required={true} component={FieldGroup}/>
+                           placeholder="Description" srOnly={true} required={true} component={InputFieldGroup}/>
                 </Col>
             </Row>
         </Panel>
