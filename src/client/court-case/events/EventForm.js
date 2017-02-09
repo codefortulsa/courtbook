@@ -1,7 +1,8 @@
 import React from "react";
 import {Field} from "redux-form";
 import {Panel, Col, Row, Glyphicon, Button} from "react-bootstrap";
-import {InputFieldGroup} from "../FieldGroup";
+import {InputFieldGroup, DatePickerFieldGroup} from "../FieldGroup";
+import {toDatetime} from "../../utils/formatDate";
 
 const EventForm = ({member, index, remove}) => {
     const header =
@@ -18,8 +19,8 @@ const EventForm = ({member, index, remove}) => {
         <Panel header={header}>
             <Row>
                 <Col md={12}>
-                    <Field name={`${member}.date`} id={`${member}.date`} label={dateLabel}
-                           placeholder="Date" srOnly={true} required={true} component={InputFieldGroup}/>
+                    <Field name={`${member}.date`} id={`${member}.date`} label={dateLabel} format={toDatetime}
+                           placeholder="Date" srOnly={true} required={true} component={DatePickerFieldGroup}/>
                 </Col>
             </Row>
             <Row>

@@ -1,5 +1,7 @@
 import React from "react";
 import {FormGroup, ControlLabel, FormControl, HelpBlock} from "react-bootstrap";
+import Datetime from 'react-datetime';
+import 'react-datetime/css/react-datetime.css';
 
 const validationState = (meta) => meta.touched && meta.error ? "error" : null;
 
@@ -35,4 +37,7 @@ export const InputFieldGroup = ({type = "text", input, label, placeholder, disab
         <FormControl type={type} placeholder={placeholder || label} disabled={disabled} {...input}/>
     </FieldGroup>;
 
-// export const DatePickerFieldGroup = ({...fieldGroupOptions}) =>
+export const DatePickerFieldGroup = ({input, ...fieldGroupOptions}) =>
+    <FieldGroup {...fieldGroupOptions}>
+        <Datetime {...input}/>
+    </FieldGroup>;
