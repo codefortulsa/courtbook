@@ -1,16 +1,16 @@
 import React from "react";
 import {Row, Col} from "react-bootstrap";
 import {Field} from "redux-form";
-import {FieldGroup} from "./FieldGroup";
+import {InputFieldGroup} from "./FieldGroup";
 
 const CourtCaseForm = () => (
     <div>
         <Row>
             <Col md={6}>
-                <Field name="caseNumber" id="caseNumber" label="Case Number" required={true} component={FieldGroup}/>
+                <Field name="caseNumber" id="caseNumber" label="Case Number" required={true} component={InputFieldGroup}/>
             </Col>
             <Col md={6}>
-                <Field name="party" id="party" label="Party Full Name" required={true} component={FieldGroup}/>
+                <Field name="party" id="party" label="Party Full Name" required={true} component={InputFieldGroup}/>
             </Col>
         </Row>
     </div>

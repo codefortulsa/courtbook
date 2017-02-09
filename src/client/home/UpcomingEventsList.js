@@ -1,18 +1,13 @@
 import React from "react";
 import {ListGroup, ListGroupItem} from "react-bootstrap";
-
-const EventHeader = ({event}) =>
-    <div>
-        <h3>
-            Case {event.courtCase.caseNumber}{' '}
-            <small>Party {event.courtCase.party}</small>
-        </h3>
-    </div>;
+import {toDatetime} from "../utils/formatDate";
 
 const EventBody = ({event}) =>
     <div>
-        <div>{event.date}</div>
-        <div>{event.description}</div>
+        <div><strong>Case {event.courtCase.caseNumber}</strong></div>
+        <div>Party: {event.courtCase.party}</div>
+        <div>Date: {toDatetime(event.date)}</div>
+        <div>Description: {event.description}</div>
     </div>;
 
 const UpcomingEventsList = ({events}) =>
@@ -20,7 +15,7 @@ const UpcomingEventsList = ({events}) =>
         <h2>Upcoming Events</h2>
         <ListGroup>
             {events.map(event =>
-                <ListGroupItem key={event.id} header={<EventHeader event={event}/>}>
+                <ListGroupItem key={event.id}>
                     <EventBody event={event}/>
                 </ListGroupItem>)
             }
