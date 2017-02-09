@@ -8,7 +8,6 @@ export const fetchCourtCaseById = (courtCaseId) =>
         .set("Authorization", `Bearer ${AuthService.getToken()}`)
         .then(response => Promise.resolve(response.body));
 
-
 export const fetchEventsByCourtCaseId = (courtCaseId) =>
     agent.get(`/rest/v1/cases/${courtCaseId}/events`)
         .set("Authorization", `Bearer ${AuthService.getToken()}`)
@@ -31,6 +30,11 @@ export const deleteEventById = (id) =>
 
 export const createEvent = (event) =>
     agent.post(`/rest/v1/events`, event)
+        .set("Authorization", `Bearer ${AuthService.getToken()}`)
+        .then(response => Promise.resolve(response.body));
+
+export const getUpcomingEvents = (event) =>
+    agent.get(`/rest/v1/events/upcoming`)
         .set("Authorization", `Bearer ${AuthService.getToken()}`)
         .then(response => Promise.resolve(response.body));
 

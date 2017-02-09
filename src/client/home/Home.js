@@ -1,8 +1,14 @@
 import React from "react";
+import UpcomingEvents from './UpcomingEvents';
+import {Row, Col} from 'react-bootstrap';
 
 const Home = () => (
     <div>
-        <h3>For great justice!</h3>
+        <Row>
+            <Col md={6}>
+                <UpcomingEvents/>
+            </Col>
+        </Row>
     </div>
 );
 

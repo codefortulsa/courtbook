@@ -20,9 +20,15 @@ export const CourtCase = bookshelf.Model.extend({
 });
 
 export const CourtCaseEvent = bookshelf.Model.extend({
-    tableName: 'courtCaseEvents'
+    tableName: 'courtCaseEvents',
+    courtCase: function() {
+        return this.hasOne(CourtCase, "id", "courtCaseId")
+    }
 });
 
 export const Stakeholder = bookshelf.Model.extend({
-    tableName: 'stakeholders'
+    tableName: 'stakeholders',
+    courtCase: function() {
+        return this.hasOne(CourtCase, "id", "courtCaseId")
+    }
 });
