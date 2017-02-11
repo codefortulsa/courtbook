@@ -57,3 +57,7 @@ export const updateStakeholder = (stakeholder) =>
     agent.put(`/rest/v1/stakeholders`, stakeholder)
         .set("Authorization", `Bearer ${AuthService.getToken()}`)
         .then(response => Promise.resolve(response.body));
+
+export const search = (search) =>
+    agent.get(`/rest/v1/cases?search=${search}`)
+        .then(response => Promise.resolve(response.body));

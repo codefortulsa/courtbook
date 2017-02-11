@@ -3,7 +3,8 @@ import {
     fetchAllCasesByLikeCaseNumber,
     createCourtCase,
     fetchCaseById,
-    fetchCaseByLikeCaseNumberAndLikeParty
+    fetchCaseByLikeCaseNumberAndLikeParty,
+    searchCases
 } from "./db/court-case";
 import {
     createEvent,
@@ -34,10 +35,17 @@ const eventsBaseUrl = `${baseUrl}/events`;
 const stakeholderBaseUrl = `${baseUrl}/stakeholders`;
 
 router.route(casesBaseUrl)
-    .get((req, res) =>
-        fetchAllCasesByLikeCaseNumber(req.query.caseNumber)
-            .then(courtCases => res.send(courtCases))
-            .catch(handleError(res, "Failed to fetch all cases by case number.")))
+    .get((req, res) => {
+        if (req.query.caseNumber) {
+            fetchAllCasesByLikeCaseNumber(req.query.caseNumber)
+                .then(courtCases => res.send(courtCases))
+                .catch(handleError(res, "Failed to fetch all cases by case number."))
+        } else {
+            searchCases(req.query.search)
+                .then(courtCases => res.send(courtCases))
+                .catch(handleError(res, "Failed to search for cases.."))
+        }
+    })
     .post((req, res) =>
         createCourtCase(req.body)
             .then((createdCourtCase) => res.send(createdCourtCase))

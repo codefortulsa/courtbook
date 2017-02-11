@@ -6,6 +6,7 @@ import Home from "./home/Home";
 import Login from "./login/Login";
 import LoggedOut from "./login/LoggedOut";
 import CreateCourtCase from "./court-case/CreateCourtCase";
+import SearchCourtCases from "./search/SearchCourtCases";
 import EditCourtCaseEvents from "./court-case/events/EditCourtCaseEvents";
 import EditStakeholders from "./court-case/stakeholders/EditStakeholders";
 import ViewCourtCase from "./court-case/ViewCourtCase";
@@ -25,6 +26,7 @@ export const makeRoutes = () => {
             <Route path="loggedOut" component={LoggedOut}/>
             <Route path="court-case"  onEnter={requireAuth}>
                 <Route path="add" component={CreateCourtCase}/>
+                <Route path="search" component={SearchCourtCases}/>
                 <Route path=":id" components={ViewCourtCase}/>
                 <Route path=":id/edit-events" components={EditCourtCaseEvents}/>
                 <Route path=":id/edit-stakeholders" components={EditStakeholders}/>
