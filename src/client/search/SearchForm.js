@@ -19,7 +19,7 @@ SearchForm.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch, props) => ({
-    searchCasesOnEnter: (e) => e.key === "Enter" ? props.searchCases() : undefined
+    searchCasesOnEnter: (e) => e.keyCode === 13 ? props.searchCases() : undefined
 });
 
 export default connect(undefined, mapDispatchToProps)(SearchForm);
