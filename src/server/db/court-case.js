@@ -18,10 +18,10 @@ export const fetchAllCasesByLikeCaseNumber = (caseNumber) =>
         .query(limit())
         .fetchAll();
 
-export const searchCases = (criteria) =>
+export const searchCases = (searchTerms) =>
     CourtCase
-        .query(orWhereCaseNumberLike(criteria))
-        .query(orWherePartyLike(criteria))
+        .query(orWhereCaseNumberLike(searchTerms))
+        .query(orWherePartyLike(searchTerms))
         .query(limit())
         .fetchAll();
 
