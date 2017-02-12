@@ -32,9 +32,9 @@ const FieldGroup = ({id, label, meta, required, srOnly, children}) => {
  * @param disabled - True to disable input
  * @param fieldGroupOptions - Options for the field group, label, and help block
  */
-export const InputFieldGroup = ({type = "text", input, label, placeholder, disabled, ...fieldGroupOptions}) =>
+export const InputFieldGroup = ({type = "text", input, label, placeholder, disabled, onKeyDown, ...fieldGroupOptions}) =>
     <FieldGroup label={label} {...fieldGroupOptions}>
-        <FormControl type={type} placeholder={placeholder || label} disabled={disabled} {...input}/>
+        <FormControl type={type} placeholder={placeholder || label} disabled={disabled} onKeyDown={onKeyDown} {...input}/>
     </FieldGroup>;
 
 export const DatePickerFieldGroup = ({input, ...fieldGroupOptions}) =>

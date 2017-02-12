@@ -5,6 +5,7 @@ import authReducer from "./authReducer";
 import createCourtCaseReducer from "./createCourtCaseReducer";
 import selectedCaseReducer from "./selectedCaseReducer";
 import upcomingEventsReducer from "./upcomingEventsReducer";
+import searchCourtCasesReducer from "./searchCourtCasesReducer";
 
 const rootReducer = combineReducers({
     routing: routerReducer,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
     auth: authReducer,
     createCourtCase: createCourtCaseReducer,
     selectedCase: selectedCaseReducer,
-    upcomingEvents: upcomingEventsReducer
+    upcomingEvents: upcomingEventsReducer,
+    searchCourtCases: searchCourtCasesReducer
 });
 
 export default rootReducer;
