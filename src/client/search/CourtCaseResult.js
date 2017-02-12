@@ -28,7 +28,7 @@ CourtCaseResult.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch, {courtCase}) => ({
-    navigateViewCourtCase: () => dispatch(navigateViewCourtCase(123))
+    navigateViewCourtCase: () => dispatch(navigateViewCourtCase(courtCase.id))
 });
 
 export default connect(undefined, mapDispatchToProps)(CourtCaseResult);
