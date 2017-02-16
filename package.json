@@ -86,6 +86,7 @@
     "dirty-chai": "^1.2.2",
     "istanbul": "^0.4.5",
     "mocha": "^3.2.0",
+    "nock": "^9.0.6",
     "nodemon": "^1.11.0",
     "nyc": "^10.1.2",
     "proxyquire": "^1.7.11",
