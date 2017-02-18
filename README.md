@@ -4,17 +4,19 @@ A UI for manually providing data for [courtbot](https://github.com/codefortulsa/
 
 ## Local development
 
-1. Follow the instructions below for configuring Auth0
 1. Create a Postgres database
 1. Copy `.env.example` to `.env` then change the example settings to your own.
-    * All `AUTH0_` settings, see below for Configuring Auth0
     * `DATABASE_URL` setting is your Postgres connection URL which will be in this format: DATABASE_URL='postgres://USERNAME:PASSWORD@HOST:PORT/DATABASE'
     * `DATABASE_DIALECT` should be 'postgres'.
 1. Run app with `npm run dev`
 
+### Authentication (Optional)
+
+By default, authentication is bypassed when developing locally. This is controlled by the environment variable `BYPASS_AUTH`. When this flag is not `true`, you will need to [configure Auth0 and all of the AUTH0 environment variables](#configuring-authentication-with-auth0).
+
 ### Database migrations
 
-Database migrations are handled by [db-migrate](https://github.com/db-migrate/node-db-migrate).
+Database migrations are handled on application startup by [db-migrate](https://github.com/db-migrate/node-db-migrate).
 
 ## Deploying to Heroku
 
