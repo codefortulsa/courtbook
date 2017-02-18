@@ -13,7 +13,8 @@ const envConfig = () => {
             memo[`__${key.toUpperCase()}__`] = JSON.stringify(dotEnvVars[key]);
             return memo;
         }, {
-            __NODE_ENV__: JSON.stringify(process.env.NODE_ENV),
+            __IS_PROD__: process.env.NODE_ENV === 'production',
+            __BYPASS_AUTH__: process.env.BYPASS_AUTH || false,
             __AUTH0_DOMAIN__: JSON.stringify(process.env.AUTH0_DOMAIN),
             __AUTH0_COURTBOT_UI_CLIENT_ID__: JSON.stringify(process.env.AUTH0_COURTBOT_UI_CLIENT_ID)
         });
