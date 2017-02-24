@@ -13,4 +13,7 @@ const bypassAuthentication = (err, req, res, next) => next();
 
 const jwtAuthentication = expressJwt({secret});
 
-export default process.env.BYPASS_AUTH ? bypassAuthentication : jwtAuthentication;
+console.info("bypass auth env=", process.env.BYPASS_AUTH);
+console.info("bypass auth=", process.env.BYPASS_AUTH === true);
+
+export default process.env.BYPASS_AUTH === true ? bypassAuthentication : jwtAuthentication;
