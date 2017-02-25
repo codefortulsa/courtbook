@@ -22,20 +22,12 @@ Database migrations are handled on application startup by [db-migrate](https://g
 
 1. Follow the instructions below for configuring Auth0
 1. Create, configure, and push your Heroku app with the following:
-    * Multiline configurations (e.g., `AUTH0_COURTBOT_SIGNING_CERT`) are a bit tricky. You can get new lines by typing `heroku config:set AUTH0_COURTBOT_SIGNING_CERT="` then paste the text with newlines and then completing the command by typing `"` then enter.
 
 ```
 heroku create
 heroku addons:add heroku-postgresql
-heroku config:set DATABASE_DIALECT="postgres"
-heroku config:set AUTH0_DOMAIN=<your auth0 domain>
-heroku config:set AUTH0_COURTBOT_UI_CLIENT_SECRET=<auth0 courtbot ui client secret>
-heroku config:set AUTH0_COURTBOT_UI_CLIENT_ID=<auth0 courtbot ui client id>
-heroku config:set AUTH0_COURTBOT_SIGNING_CERT="<auth0 courtbot client signing cert>"
-heroku config:set AUTH0_COURTBOT_CLIENT_ID=<auth0 courtbot client id>
-heroku config:set AUTH0_COURTBOT_CLIENT_SECRET=<auth0 courtbot client secret>
-heroku config:set COURTBOT_BASE_URI=<courtbot url>
-heroku config:set COURTBOT_API_TOKEN=<courtbot api token>
+# See .env.sample for all possible env variables
+heroku config:set ENV_VARIABLE=<value>
 git push heroku master
 ```
 
@@ -44,19 +36,28 @@ git push heroku master
 OAuth2 authentication is provided by [Auth0](https://auth0.com) so these steps will get you going there:
 
 1. Register for an account with Auth0
-1. Configure Auth0:
-    1. Create a new connection database for Courtbook
-        * Name it "courtbook-user-database"
-        * Disable sign ups - prevents self-signup
-    1. Create a new client using "single page application". Name the client "courtbook". This client is used for user authentication.
-        * Allowed origins (CORS): 
-            * Add `https://<your_sub_domain>.herokuapp.com`
-            * _Local development only_ add `http://localhost:5000`
-        * Allowed callback URLs: 
-            * Add `https://<your_sub_domain>.herokuapp.com/login`
-            * _Local development only_ add `http://localhost:5000/login`
-        * The domain, client ID, and client secret is the configuration for `AUTH0_DOMAIN`, `AUTH0_COURTBOT_UI_CLIENT_ID`, and `AUTH0_COURTBOT_UI_CLIENT_SECRET`.
-    1. Create a new "non-interactive" client named "courtbot". This client is used for courtbot to make calls to certain API endpoints without providing a username and password.
-        * The domain, client ID, and client secret is the configuration for `AUTH0_DOMAIN`, `AUTH0_COURTBOT_CLIENT_ID`, and `AUTH0_COURTBOT_CLIENT_SECRET`. 
-        * Under advanced settings > certificates, the signing certificate is the configuration for `AUTH0_COURTBOT_SIGNING_CERT`.
+1. Create a new connection database for Courtbook
+    * Name it "courtbook-user-database"
+    * Disable sign ups - this prevents self-signup
+1. Create the "Courtbook UI" client - The client is used by the Courtbook UI for user authentication
+	1. Click on "Clients" then the "Create Client" button.
+	1. Fill in the client name as "Courtbook UI"
+	1. Choose the "Single Page Web Applications" then click "Create"
+	1. Under settings:
+		1. Allowed origins (CORS): 
+       	* Add `https://<your_sub_domain>.herokuapp.com`
+       	* _Local development only_ add `http://localhost:5000`
+    	1. Allowed callback URLs: 
+       	* Add `https://<your_sub_domain>.herokuapp.com/login`
+			* _Local development only_ add `http://localhost:5000/login`
+1. Create the "Courtbot" client - This client is used for courtbot to make calls to certain API endpoints without providing a username and password
+	1. Click on "Clients" then the "Create Clients" button
+	1. Fill in the client name as "Courtbot"
+	1. Select "Non Interactive Clients" then click "Create"
+1. Create the "Courtbook API"
+	1. Click on "APIs" then the Create API button and create the API with the following:
+		* Name: "Courtbook API"
+ 	 	* Identifier: "https://tulsa-courtbook.herokuapp.com"
+	 	* Signing Algorithm: "RS256"
+	1. Authorize the "Courtbook API" editing the API and clicking "Non Interactive Clients"
 

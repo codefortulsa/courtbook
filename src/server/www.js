@@ -7,7 +7,7 @@ import webpackDevMiddleware from "webpack-dev-middleware";
 import webpack from "webpack";
 import webpackConfig from "../../webpack.config";
 import v1Router from "./v1Router";
-import authMiddleware from "./auth-middleware";
+import {apiAuthentication, uiAuthentication, bypassAuthentication} from "./auth-middleware";
 import loadEnv from "../../loadEnv";
 import {configureLogging} from './log4js';
 import {getLogger} from 'log4js';
@@ -38,7 +38,10 @@ app.use(bodyParser.urlencoded({extended: true}));
 const publicDir = path.join(__dirname, '../../public');
 app.use(`/public`, express.static(publicDir));
 
-app.use("/rest", authMiddleware, v1Router);
+const bypassAuth = process.env.BYPASS_AUTH === 'true';
+
+app.use("/api", bypassAuth ? bypassAuthentication : apiAuthentication, v1Router);
+app.use("/rest", bypassAuth ? bypassAuthentication : uiAuthentication, v1Router);
 
 app.get('/*', (req, res) => res.sendFile(`${publicDir}/index.html`));
 
