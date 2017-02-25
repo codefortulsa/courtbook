@@ -4,7 +4,6 @@ import {EventEmitter} from "events";
 import {isTokenExpired} from "./jwtHelper";
 import Auth0Lock from "auth0-lock";
 import {browserHistory} from "react-router";
-import {} from '../routes';
 
 export default class AuthService extends EventEmitter {
     constructor(clientId, domain) {
@@ -57,6 +56,9 @@ export default class AuthService extends EventEmitter {
     }
 
     static loggedIn() {
+        if (!__IS_PROD__ && __BYPASS_AUTH__) {
+            return true;
+        }
         // Checks if there is a saved token and it's still valid
         const token = AuthService.getToken();
         return !!token && !isTokenExpired(token);

@@ -26,14 +26,14 @@ export const createCase = (courtCase) =>
 export const deleteEventById = (id) =>
     agent.delete(`/rest/v1/events/${id}`)
         .set("Authorization", `Bearer ${AuthService.getToken()}`)
-        .then(response => Promise.resolve(response.body));
+        .then(response => Promise.resolve(id));
 
 export const createEvent = (event) =>
     agent.post(`/rest/v1/events`, event)
         .set("Authorization", `Bearer ${AuthService.getToken()}`)
         .then(response => Promise.resolve(response.body));
 
-export const getUpcomingEvents = (event) =>
+export const getUpcomingEvents = () =>
     agent.get(`/rest/v1/events/upcoming`)
         .set("Authorization", `Bearer ${AuthService.getToken()}`)
         .then(response => Promise.resolve(response.body));
@@ -46,7 +46,7 @@ export const updateEvent = (event) =>
 export const deleteStakeholderById = (id) =>
     agent.delete(`/rest/v1/stakeholders/${id}`)
         .set("Authorization", `Bearer ${AuthService.getToken()}`)
-        .then(response => Promise.resolve(response.body));
+        .then(response => Promise.resolve(id));
 
 export const createStakeholder = (stakeholder) =>
     agent.post(`/rest/v1/stakeholders`, stakeholder)

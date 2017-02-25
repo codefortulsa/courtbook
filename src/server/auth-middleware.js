@@ -1,16 +1,23 @@
-import _ from "lodash";
 import expressJwt from "express-jwt";
+import jwks from "jwks-rsa";
+import {getLogger} from "log4js";
 
-export const secret = (req, tokenPayload, cb) => {
-    if (_.includes(tokenPayload.aud, process.env.AUTH0_COURTBOT_UI_CLIENT_ID)) {
-        cb(null, process.env.AUTH0_COURTBOT_UI_CLIENT_SECRET);
-    } else {
-        cb(null, process.env.AUTH0_COURTBOT_SIGNING_CERT);
-    }
+const log = getLogger("www");
+
+export const bypassAuthentication = (err, req, res, next) => {
+    log.warn("Bypassing authentication!");
+    next();
 };
 
-const bypassAuthentication = (err, req, res, next) => next();
+export const uiAuthentication = expressJwt({secret: process.env.AUTH0_COURTBOOK_UI_CLIENT_SECRET});
 
-const jwtAuthentication = expressJwt({secret});
-
-export default process.env.BYPASS_AUTH ? bypassAuthentication : jwtAuthentication;
+export const apiAuthentication = expressJwt({
+    secret: jwks.expressJwtSecret({
+        cache: true,
+        rateLimit: false,
+        jwksUri: process.env.AUTH0_COURTBOOK_API_JWKS_URI
+    }),
+    audience: process.env.AUTH0_COURTBOOK_API_AUDIENCE,
+    issuer: process.env.AUTH0_COURTBOOK_API_ISSUER,
+    algorithms: ['RS256']
+});
