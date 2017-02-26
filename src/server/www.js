@@ -9,8 +9,9 @@ import webpackConfig from "../../webpack.config";
 import v1Router from "./v1Router";
 import {apiAuthentication, uiAuthentication, bypassAuthentication} from "./auth-middleware";
 import loadEnv from "../../loadEnv";
-import {configureLogging} from './log4js';
-import {getLogger} from 'log4js';
+import {configureLogging} from "./log4js";
+import {getLogger} from "log4js";
+import errorHandlingMiddleware from "./error-handling-middleware";
 
 const log = getLogger("www");
 
@@ -42,6 +43,8 @@ const bypassAuth = process.env.BYPASS_AUTH === 'true';
 
 app.use("/api", bypassAuth ? bypassAuthentication : apiAuthentication, v1Router);
 app.use("/rest", bypassAuth ? bypassAuthentication : uiAuthentication, v1Router);
+
+app.use(errorHandlingMiddleware);
 
 app.get('/*', (req, res) => res.sendFile(`${publicDir}/index.html`));
 
