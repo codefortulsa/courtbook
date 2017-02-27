@@ -12,7 +12,8 @@
     "db-migrate": "db-migrate up",
     "build": "NODE_ENV=production webpack --config ./webpack.config.js --progress --colors",
     "postinstall": "npm run build",
-    "start": "npm run db-migrate && babel-node src/server/www.js"
+    "start": "npm run db-migrate && babel-node src/server/www.js",
+    "test:it": "cucumberjs --compiler js:babel-core/register"
   },
   "author": "Ash Lux (ashlux@gmail.com)",
   "license": "MIT",
@@ -85,6 +86,7 @@
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
     "coveralls": "^2.11.16",
+    "cucumber": "^2.0.0-rc.7",
     "dirty-chai": "^1.2.2",
     "istanbul": "^0.4.5",
     "mocha": "^3.2.0",
