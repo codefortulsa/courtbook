@@ -22,11 +22,18 @@ function setup() {
     const sandbox = sinon.sandbox.create();
     const authToken = chance.guid();
 
+    const reduxStore = (state={}) => ({
+        getState: sandbox.stub().returns(state),
+        dispatch: sandbox.stub(),
+        subscribe: sandbox.stub()
+    });
+
     beforeEach(() => {
         sandbox.stub(AuthService, "getToken").returns(authToken);
     });
 
     afterEach(function () {
+        sandbox.reset();
         sandbox.restore();
         nock.cleanAll();
     });
@@ -37,7 +44,8 @@ function setup() {
         chance,
         sandbox,
         authToken,
-        nock
+        nock,
+        reduxStore
     };
 }
 

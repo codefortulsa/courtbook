@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export default {
     courtCase: function () {
         return {
@@ -22,9 +24,15 @@ export default {
         return {
             id: this.integer(),
             courtCaseId: courtCase.id,
-            date: this.date().toString(),
+            date: this.date().toISOString(),
             description: this.sentence(),
             courtCase
+        }
+    },
+
+    reduxAction: function() {
+        return {
+            type: `TYPE_${this.word()}`.toUpperCase()
         }
     }
 };
