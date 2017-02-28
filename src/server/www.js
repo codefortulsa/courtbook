@@ -1,4 +1,4 @@
-import {getLogger} from "./log4js";
+import {getLogger} from "log4js";
 import app from "./app";
 
 const log = getLogger("server");
