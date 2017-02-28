@@ -1,5 +1,6 @@
 import nock from "nock";
 import chai from "chai";
+import chaiEnzyme from 'chai-enzyme';
 import dirtyChai from "dirty-chai";
 import sinonChai from "sinon-chai";
 import chaiAsPromised from "chai-as-promised";
@@ -10,6 +11,7 @@ import AuthService from "../src/client/utils/AuthService";
 
 chai.use(chaiAsPromised);
 chai.use(sinonChai);
+chai.use(chaiEnzyme());
 chai.use(dirtyChai);
 
 require("../loadEnv")();
