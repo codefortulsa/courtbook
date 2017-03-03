@@ -77,7 +77,7 @@
     "superagent": "^3.3.1",
     "superagent-as-promised": "^4.0.0",
     "url-loader": "^0.5.7",
-    "webpack": "^1.14.0",
+    "webpack": "^2.2.1",
     "webpack-dev-middleware": "^1.9.0"
   },
   "devDependencies": {
