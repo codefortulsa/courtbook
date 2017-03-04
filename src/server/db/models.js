@@ -7,7 +7,7 @@ const knex = Knex({
     debug: true
 });
 
-const bookshelf = Bookshelf(knex);
+export const bookshelf = Bookshelf(knex);
 
 export const CourtCase = bookshelf.Model.extend({
     tableName: 'courtCases',

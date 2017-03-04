@@ -7,18 +7,19 @@ export default {
         };
     },
 
-    stakeholder: function (courtCase=this.courtCase()) {
+    stakeholder: function ({courtCase = this.courtCase(), ...values}={}) {
         return {
             id: this.integer(),
             courtCaseId: courtCase.id,
             name: this.name(),
             contact: this.phone(),
             contactType: this.pickone(["sms", "email", "phone call", "facebook", "twitter"]),
-            courtCase
+            courtCase,
+            ...values
         };
     },
 
-    event: function(courtCase=this.courtCase()) {
+    event: function (courtCase = this.courtCase()) {
         return {
             id: this.integer(),
             courtCaseId: courtCase.id,
@@ -28,7 +29,7 @@ export default {
         }
     },
 
-    reduxAction: function() {
+    reduxAction: function () {
         return {
             type: `TYPE_${this.word()}`.toUpperCase()
         }
