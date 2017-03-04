@@ -1,14 +1,6 @@
 import React from "react";
 import {ListGroup, ListGroupItem} from "react-bootstrap";
-import {toDatetime} from "../utils/formatDate";
-
-const EventBody = ({event}) =>
-    <div>
-        <div><strong>Case {event.courtCase.caseNumber}</strong></div>
-        <div>Party: {event.courtCase.party}</div>
-        <div>Date: {toDatetime(event.date)}</div>
-        <div>Description: {event.description}</div>
-    </div>;
+import UpcomingEvent from "./UpcomingEvent";
 
 const UpcomingEventsList = ({events}) =>
     <div>
@@ -16,7 +8,7 @@ const UpcomingEventsList = ({events}) =>
         <ListGroup>
             {events.map(event =>
                 <ListGroupItem key={event.id}>
-                    <EventBody event={event}/>
+                    <UpcomingEvent event={event}/>
                 </ListGroupItem>)
             }
         </ListGroup>
