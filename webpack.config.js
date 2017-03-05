@@ -21,7 +21,6 @@ const envConfig = () => {
 };
 
 module.exports = {
-    debug: true,
     devtool: "inline-source-map",
 
     entry: `${srcDir}/client/main.js`,
@@ -33,7 +32,7 @@ module.exports = {
     },
 
     resolve: {
-        extensions: ['', '.js', '.jsx']
+        extensions: ['.js', '.jsx']
     },
 
     module: {
@@ -55,16 +54,16 @@ module.exports = {
             loader: "file-loader"
         }, {
             test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
-            loader: 'url?limit=10000&mimetype=application/font-woff'
+            loader: 'url-loader?limit=10000&mimetype=application/font-woff'
         }, {
             test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-            loader: 'url?limit=10000&mimetype=application/octet-stream'
+            loader: 'url-loader?limit=10000&mimetype=application/octet-stream'
         }, {
             test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-            loader: 'file'
+            loader: 'file-loader'
         }, {
             test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-            loader: 'url?limit=10000&mimetype=image/svg+xml'
+            loader: 'url-loader?limit=10000&mimetype=image/svg+xml'
         }]
     },
 

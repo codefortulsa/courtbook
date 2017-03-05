@@ -2,7 +2,7 @@ import expressJwt from "express-jwt";
 import jwks from "jwks-rsa";
 import {getLogger} from "log4js";
 
-const log = getLogger("www");
+const log = getLogger("auth-middleware");
 
 export const bypassAuthentication = (err, req, res, next) => {
     log.warn("Bypassing authentication!");

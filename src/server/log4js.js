@@ -16,7 +16,7 @@ const logentriesAppender = () => {
             "type": "logentries-log4js-appender",
             "level": "DEBUG",
             options: {
-                "token": process.env.LOGENTRIES_TOKEN
+                "token": logentriesToken
             }
         }
     }

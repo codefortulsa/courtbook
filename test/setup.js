@@ -1,5 +1,6 @@
 import nock from "nock";
 import chai from "chai";
+import chaiEnzyme from 'chai-enzyme';
 import dirtyChai from "dirty-chai";
 import sinonChai from "sinon-chai";
 import chaiAsPromised from "chai-as-promised";
@@ -10,6 +11,7 @@ import AuthService from "../src/client/utils/AuthService";
 
 chai.use(chaiAsPromised);
 chai.use(sinonChai);
+chai.use(chaiEnzyme());
 chai.use(dirtyChai);
 
 require("../loadEnv")();
@@ -20,11 +22,18 @@ function setup() {
     const sandbox = sinon.sandbox.create();
     const authToken = chance.guid();
 
+    const reduxStore = (state={}) => ({
+        getState: sandbox.stub().returns(state),
+        dispatch: sandbox.stub(),
+        subscribe: sandbox.stub()
+    });
+
     beforeEach(() => {
         sandbox.stub(AuthService, "getToken").returns(authToken);
     });
 
     afterEach(function () {
+        sandbox.reset();
         sandbox.restore();
         nock.cleanAll();
     });
@@ -35,7 +44,8 @@ function setup() {
         chance,
         sandbox,
         authToken,
-        nock
+        nock,
+        reduxStore
     };
 }
 
