@@ -12,7 +12,9 @@ export const getUpcomingEvents = () =>
         .fetchAll({withRelated: ["courtCase"]});
 
 export const createEvent = (courtCaseEvent) =>
-    fetchCaseById(courtCaseEvent.courtCaseId).then(courtCase => courtCase.courtCaseEvents().attach(courtCaseEvent));
+    fetchCaseById(courtCaseEvent.courtCaseId)
+        .then(courtCase => courtCase.courtCaseEvents().attach(courtCaseEvent))
+        .then(events => events.head());
 
 export const getEventsByCaseId = (courtCaseId) => CourtCaseEvent.where({courtCaseId}).fetchAll();
 

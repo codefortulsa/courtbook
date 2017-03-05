@@ -1,31 +1,31 @@
 export default {
-    courtCase: function () {
+    courtCase: function ({...values}={}) {
         return {
-            id: this.integer(),
+            id: this.integer() + "", // Postgres BIGINT exceed's JavaScript's Number.MAX_SAFE_INTEGER
             caseNumber: this.guid(),
-            party: this.name()
+            party: this.name(),
+            ...values
         };
     },
 
     stakeholder: function ({courtCase = this.courtCase(), ...values}={}) {
         return {
-            id: this.integer(),
+            id: this.integer() + "", // Postgres BIGINT exceed's JavaScript's Number.MAX_SAFE_INTEGER
             courtCaseId: courtCase.id,
             name: this.name(),
             contact: this.phone(),
             contactType: this.pickone(["sms", "email", "phone call", "facebook", "twitter"]),
-            courtCase,
             ...values
         };
     },
 
-    event: function (courtCase = this.courtCase()) {
+    event: function ({courtCase = this.courtCase(), ...values}={}) {
         return {
-            id: this.integer(),
+            id: this.integer() + "", // Postgres BIGINT exceed's JavaScript's Number.MAX_SAFE_INTEGER
             courtCaseId: courtCase.id,
             date: this.date().toISOString(),
             description: this.sentence(),
-            courtCase
+            ...values
         }
     },
 
