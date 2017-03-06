@@ -29,6 +29,32 @@ describe("courtbook-api", () => {
             .to.eventually.eql(events);
     });
 
+    it("fetchPastEventsByCourtCaseId", () => {
+        const courtCaseId = chance.integer();
+        const events = chance.n(chance.event, 3);
+
+        nock('http://localhost/')
+            .get(`/rest/v1/cases/${courtCaseId}/events/past`)
+            .matchHeader('Authorization', `Bearer ${authToken}`)
+            .reply(200, events);
+
+        return expect(api.fetchPastEventsByCourtCaseId(courtCaseId))
+            .to.eventually.eql(events);
+    });
+
+    it("fetchFutureEventsByCourtCaseId", () => {
+        const courtCaseId = chance.integer();
+        const events = chance.n(chance.event, 3);
+
+        nock('http://localhost/')
+            .get(`/rest/v1/cases/${courtCaseId}/events/future`)
+            .matchHeader('Authorization', `Bearer ${authToken}`)
+            .reply(200, events);
+
+        return expect(api.fetchFutureEventsByCourtCaseId(courtCaseId))
+            .to.eventually.eql(events);
+    });
+
     it("fetchStakeholdersByCourtCaseId", () => {
         const courtCaseId = chance.integer();
         const stakeholders = chance.n(chance.stakeholder, 3);

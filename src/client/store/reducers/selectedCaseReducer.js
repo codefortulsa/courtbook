@@ -1,9 +1,12 @@
+import _ from "lodash";
 import {SELECT_COURT_CASE, DESELECT_COURT_CASE} from "../actions/CourtCaseActions";
 
-const initialState = {
+export const initialState = {
     courtCase: {},
+    stakeholders: [],
     events: [],
-    stakeholders: []
+    pastEvents: [],
+    futureEvents: []
 };
 
 export default (state = initialState, action) => {
@@ -11,7 +14,11 @@ export default (state = initialState, action) => {
         case DESELECT_COURT_CASE:
             return initialState;
         case SELECT_COURT_CASE:
-            return {...state, ...action.payload};
+            return {
+                ...state,
+                ...action.payload,
+                events: _.union(action.payload.futureEvents, action.payload.pastEvents)
+            };
         default:
             return state;
     }

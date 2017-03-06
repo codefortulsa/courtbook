@@ -6,7 +6,15 @@ import {
     fetchCaseByLikeCaseNumberAndLikeParty,
     searchCases
 } from "./db/court-case";
-import {createEvent, getEventsByCaseId, deleteEventById, updateEvent, getUpcomingEvents} from "./db/court-case-events";
+import {
+    createEvent,
+    getEventsByCaseId,
+    deleteEventById,
+    updateEvent,
+    getUpcomingEvents,
+    getFutureEventsByCaseId,
+    getPastEventsByCaseId
+} from "./db/court-case-events";
 import {
     createStakeholder,
     getStakeholdersByCaseId,
@@ -45,6 +53,18 @@ router.route(`${casesBaseUrl}/:courtCaseId/events`)
     .get((req, res, next) =>
         fetchCaseById(req.params.courtCaseId)
             .then(courtCase => getEventsByCaseId(courtCase.id))
+            .then(courtCaseEvents => res.send(courtCaseEvents), next));
+
+router.route(`${casesBaseUrl}/:courtCaseId/events/future`)
+    .get((req, res, next) =>
+        fetchCaseById(req.params.courtCaseId)
+            .then(courtCase => getFutureEventsByCaseId(courtCase.id))
+            .then(courtCaseEvents => res.send(courtCaseEvents), next));
+
+router.route(`${casesBaseUrl}/:courtCaseId/events/past`)
+    .get((req, res, next) =>
+        fetchCaseById(req.params.courtCaseId)
+            .then(courtCase => getPastEventsByCaseId(courtCase.id))
             .then(courtCaseEvents => res.send(courtCaseEvents), next));
 
 router.route(`${casesBaseUrl}/:courtCaseId/stakeholders`)

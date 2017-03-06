@@ -13,6 +13,16 @@ export const fetchEventsByCourtCaseId = (courtCaseId) =>
         .set("Authorization", `Bearer ${AuthService.getToken()}`)
         .then(response => Promise.resolve(response.body));
 
+export const fetchPastEventsByCourtCaseId = (courtCaseId) =>
+    agent.get(`/rest/v1/cases/${courtCaseId}/events/past`)
+        .set("Authorization", `Bearer ${AuthService.getToken()}`)
+        .then(response => Promise.resolve(response.body));
+
+export const fetchFutureEventsByCourtCaseId = (courtCaseId) =>
+    agent.get(`/rest/v1/cases/${courtCaseId}/events/future`)
+        .set("Authorization", `Bearer ${AuthService.getToken()}`)
+        .then(response => Promise.resolve(response.body));
+
 export const fetchStakeholdersByCourtCaseId = (courtCaseId) =>
     agent.get(`/rest/v1/cases/${courtCaseId}/stakeholders`)
         .set("Authorization", `Bearer ${AuthService.getToken()}`)

@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import {CourtCaseEvent} from "./models";
 import {fetchCaseById} from "./court-case";
 
@@ -17,6 +18,10 @@ export const createEvent = (courtCaseEvent) =>
         .then(events => events.head());
 
 export const getEventsByCaseId = (courtCaseId) => CourtCaseEvent.where({courtCaseId}).fetchAll();
+
+export const getPastEventsByCaseId = (courtCaseId) => CourtCaseEvent.where({courtCaseId}).query(qb => qb.whereRaw("date < current_timestamp")).orderBy('date', 'DESC').fetchAll();
+
+export const getFutureEventsByCaseId = (courtCaseId) => CourtCaseEvent.where({courtCaseId}).query(qb => qb.whereRaw("date >= current_timestamp")).orderBy('date', 'ASC').fetchAll();
 
 export const getEventById = (id) => CourtCaseEvent.where({id}).fetch();
 
