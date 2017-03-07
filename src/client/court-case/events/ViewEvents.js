@@ -2,7 +2,7 @@ import React from "react";
 import {Col, Row, Button} from "react-bootstrap";
 import {EventList} from "./EventList";
 
-export const ViewEvents = ({events, navigateEditEvents}) => (
+export const ViewEvents = ({pastEvents, futureEvents, navigateEditEvents}) => (
     <div>
         <Row>
             <Col md={6}>
@@ -16,7 +16,14 @@ export const ViewEvents = ({events, navigateEditEvents}) => (
         </Row>
         <Row>
             <Col md={12}>
-                <EventList events={events}/>
+                <h5>Future events</h5>
+                <EventList events={futureEvents}/>
+            </Col>
+        </Row>
+        <Row>
+            <Col md={12}>
+                <h5>Past events</h5>
+                <EventList events={pastEvents}/>
             </Col>
         </Row>
     </div>
@@ -25,6 +32,7 @@ export const ViewEvents = ({events, navigateEditEvents}) => (
 ViewEvents.displayName = "ViewEvents";
 
 ViewEvents.propTypes = {
-    events: React.PropTypes.array.isRequired,
+    pastEvents: React.PropTypes.array.isRequired,
+    futureEvents: React.PropTypes.array.isRequired,
     navigateEditEvents: React.PropTypes.func.isRequired
 };
