@@ -3,8 +3,7 @@ import Bookshelf from 'bookshelf';
 
 const knex = Knex({
     client: 'postgres',
-    connection: process.env.DATABASE_URL,
-    debug: true
+    connection: process.env.DATABASE_URL
 });
 
 export const bookshelf = Bookshelf(knex);

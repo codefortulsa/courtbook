@@ -15,8 +15,16 @@ describe("<UpcomingEvent/>", () => {
     };
     const UpcomingEvent = require("../../../src/client/home/UpcomingEvent", deps).default;
 
+    const randomEvent = () => {
+        const courtCase = chance.courtCase();
+        return {
+            ...chance.event(courtCase),
+            courtCase
+        };
+    };
+
     it("Should render case event", () => {
-        const event = chance.event();
+        const event = randomEvent();
 
         const wrapper = shallow(<UpcomingEvent store={reduxStore()} event={event}/>).shallow();
 
@@ -27,7 +35,7 @@ describe("<UpcomingEvent/>", () => {
     });
 
     it("Should have link to view court case", () => {
-        const event = chance.event();
+        const event = randomEvent();
         const store = reduxStore();
         const action = chance.reduxAction();
         navigateViewCourtCase.returns(action);

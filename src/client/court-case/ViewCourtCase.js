@@ -11,7 +11,8 @@ import {CourtCaseHeader} from "./CourtCaseHeader";
 const ViewCourtCase = ({
     caseNumber,
     party,
-    events,
+    pastEvents,
+    futureEvents,
     stakeholders,
     navigateEditStakeholders,
     navigateEditEvents
@@ -24,12 +25,12 @@ const ViewCourtCase = ({
         </Row>
         <Row>
             <Col md={6}>
-                <ViewEvents events={events}
-                            navigateEditEvents={navigateEditEvents}/>
-            </Col>
-            <Col md={6}>
                 <ViewStakeholders stakeholders={stakeholders}
                                   navigateEditStakeholders={navigateEditStakeholders}/>
+            </Col>
+            <Col md={6}>
+                <ViewEvents futureEvents={futureEvents} pastEvents={pastEvents}
+                            navigateEditEvents={navigateEditEvents}/>
             </Col>
         </Row>
     </Grid>
@@ -39,7 +40,8 @@ const mapStateToProps = (state) => ({
     caseNumber: state.selectedCase.courtCase.caseNumber,
     party: state.selectedCase.courtCase.party,
     stakeholders: state.selectedCase.stakeholders,
-    events: state.selectedCase.events
+    pastEvents: state.selectedCase.pastEvents,
+    futureEvents: state.selectedCase.futureEvents
 });
 
 const mapDispatchToProps = (dispatch, {params: {id}}) => ({

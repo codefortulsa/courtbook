@@ -1,12 +1,12 @@
 import _ from "lodash";
-import {navigateViewCourtCase} from './NavigationActions';
+import {navigateViewCourtCase} from "./NavigationActions";
 import {deleteEventById, updateEvent, createEvent} from "../../courtbook-api";
+import {arrayUnshift} from "redux-form";
 
 export const SAVE_EVENTS = "SAVE_EVENTS";
 
 const createNewEvents = (courtCaseId, events) => {
     const newEvents = _.chain(events)
-        .compact() // todo: atm adding an event without entering data causes the event to be null
         .filter((event) => !event.id)
         .map(event => _.assign({}, event, {courtCaseId}))
         .value();
@@ -32,3 +32,5 @@ export const saveEvents = ({courtCaseId, events, existingEventIds}, dispatch) =>
         updateEvents(events)
     ]).then(() => dispatch(navigateViewCourtCase(courtCaseId)))
 });
+
+export const addEvent = (formName) => () => arrayUnshift(formName, "events", {date: new Date(), description: ""});

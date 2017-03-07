@@ -1,24 +1,28 @@
 import _ from "lodash";
 import React from "react";
 import {connect} from "react-redux";
-import {Button, ButtonToolbar, Grid, PageHeader} from "react-bootstrap";
+import {Button, ButtonToolbar, Grid, PageHeader, Glyphicon} from "react-bootstrap";
 import {reduxForm, FieldArray} from "redux-form";
 import EventsForm from "./EventsForm";
 import CourtCaseBreadcrumbs from "../CourtCaseBreadcrumbs";
 import {fetchAndSelectCourtCase} from "../../store/actions/CourtCaseActions";
-import {saveEvents} from "../../store/actions/EventActions";
+import {saveEvents, addEvent} from "../../store/actions/EventActions";
 import {eventValidation} from "./eventValidation";
 import {enhanceWithFetchCourtCase} from "../enhanceWithFetchCourtCase";
 
-const EditCourtCaseEvents = ({caseId, caseNumber, party, handleSubmit}) => {
+const formName = "editCourtCaseEventsForm";
+
+const EditCourtCaseEvents = ({caseId, caseNumber, party, handleSubmit, addEvent}) => {
     if (caseNumber && party) {
         return (
             <Grid fluid>
-                <CourtCaseBreadcrumbs caseId={caseId} caseNumber={caseNumber} party={party} activeBreadcrumbText="Edit Events"/>
+                <CourtCaseBreadcrumbs caseId={caseId} caseNumber={caseNumber} party={party}
+                                      activeBreadcrumbText="Edit Events"/>
                 <PageHeader>Edit Events{' '}
                     <small>Case {caseNumber} ({party})</small>
                     <div className="pull-right">
                         <ButtonToolbar>
+                            <Button onClick={addEvent}><Glyphicon glyph="plus"/> Add</Button>
                             <Button id="create" bsStyle="primary" onClick={handleSubmit}>Save</Button>
                         </ButtonToolbar>
                     </div>
@@ -44,8 +48,8 @@ const mapStateToProps = (state) => ({
     }
 });
 
-export default connect(mapStateToProps, {fetchAndSelectCourtCase, saveEvents})(reduxForm({
-    form: "editCourtCaseEventsForm",
+export default connect(mapStateToProps, {fetchAndSelectCourtCase, saveEvents, addEvent: addEvent(formName)})(reduxForm({
+    form: formName,
     onSubmit: saveEvents,
     enableReinitialize: true,
     validate: eventValidation
