@@ -1,9 +1,9 @@
 import express from "express";
 import {
-    fetchAllCasesByLikeCaseNumber,
+    fetchAllCasesByCaseNumberEqualsCaseInsensitive,
     createCourtCase,
     fetchCaseById,
-    fetchCaseByLikeCaseNumberAndLikeParty,
+    fetchCaseByCaseInsensitiveCaseNumberAndParty,
     searchCases
 } from "./db/court-case";
 import {
@@ -32,7 +32,7 @@ const stakeholderBaseUrl = `${baseUrl}/stakeholders`;
 router.route(casesBaseUrl)
     .get((req, res, next) => {
         if (req.query.caseNumber) {
-            return fetchAllCasesByLikeCaseNumber(req.query.caseNumber)
+            return fetchAllCasesByCaseNumberEqualsCaseInsensitive(req.query.caseNumber)
                 .then(courtCases => res.send(courtCases), next);
         } else {
             return searchCases(req.query.search)
@@ -75,7 +75,7 @@ router.route(`${casesBaseUrl}/:courtCaseId/stakeholders`)
 
 router.route(`${casesBaseUrl}/:caseNumber/party/:party/events`)
     .get((req, res, next) =>
-        fetchCaseByLikeCaseNumberAndLikeParty(req.params.caseNumber, req.params.party)
+        fetchCaseByCaseInsensitiveCaseNumberAndParty(req.params.caseNumber, req.params.party)
             .then(courtCase => courtCase ? getEventsByCaseId(courtCase.id) : [])
             .then(courtCaseEvents => res.send(courtCaseEvents), next));
 
