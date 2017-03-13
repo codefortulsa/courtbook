@@ -7,7 +7,7 @@ const CourtCaseForm = () => (
     <div>
         <Row>
             <Col md={6}>
-                <Field name="caseNumber" id="caseNumber" label="Case Number" required={true} component={InputFieldGroup}/>
+                <Field name="caseNumber" id="caseNumber" label="Case Number" required={true} autoFocus={true} component={InputFieldGroup}/>
             </Col>
             <Col md={6}>
                 <Field name="party" id="party" label="Party Full Name" required={true} component={InputFieldGroup}/>

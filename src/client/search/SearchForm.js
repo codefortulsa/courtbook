@@ -7,7 +7,7 @@ import {InputFieldGroup} from "../court-case/FieldGroup";
 const SearchForm = ({searchCases, searchCasesOnEnter}) =>
     <div>
         <Field name="searchTerms" id="searchTerms" label="Search by case number and party"
-               onKeyDown={searchCasesOnEnter} component={InputFieldGroup}/>
+               onKeyDown={searchCasesOnEnter} autoFocus={true} component={InputFieldGroup}/>
         <div className="pull-right">
             <Button bsStyle="primary" onClick={searchCases}>Search</Button>
         </div>
