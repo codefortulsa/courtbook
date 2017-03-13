@@ -3,21 +3,15 @@
 const path = require('path');
 const webpack = require('webpack');
 
-const dotEnvVars = require("./loadEnv")();
+require("./loadEnv")();
 
 const srcDir = path.join(__dirname, './src');
 
-const envConfig = () => {
-    return Object.keys(dotEnvVars)
-        .reduce((memo, key) => {
-            memo[`__${key.toUpperCase()}__`] = JSON.stringify(dotEnvVars[key]);
-            return memo;
-        }, {
-            __IS_PROD__: process.env.NODE_ENV === 'production',
-            __BYPASS_AUTH__: process.env.BYPASS_AUTH === 'true',
-            __AUTH0_DOMAIN__: JSON.stringify(process.env.AUTH0_DOMAIN),
-            __AUTH0_COURTBOOK_UI_CLIENT_ID__: JSON.stringify(process.env.AUTH0_COURTBOOK_UI_CLIENT_ID)
-        });
+const envConfig = {
+    __IS_PROD__: process.env.NODE_ENV === 'production',
+    __BYPASS_AUTH__: process.env.BYPASS_AUTH === 'true' || process.env.BYPASS_AUTH === true,
+    __AUTH0_DOMAIN__: JSON.stringify(process.env.AUTH0_DOMAIN),
+    __AUTH0_COURTBOOK_UI_CLIENT_ID__: JSON.stringify(process.env.AUTH0_COURTBOOK_UI_CLIENT_ID)
 };
 
 module.exports = {
@@ -43,7 +37,7 @@ module.exports = {
         }, {
             test: /\.css$/,
             loader: "style-loader!css-loader"
-        },{
+        }, {
             test: /\.less/,
             loader: "style-loader!css-loader!less-loader"
         }, {
@@ -68,6 +62,6 @@ module.exports = {
     },
 
     plugins: [
-        new webpack.DefinePlugin(envConfig())
+        new webpack.DefinePlugin(envConfig)
     ]
 };
